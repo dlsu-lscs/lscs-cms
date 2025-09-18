@@ -15,7 +15,24 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
+    theme: 'dark',
     user: Users.slug,
+    meta: {
+      titleSuffix: '- LSCS CMS',
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          url: '/lscs-logo.png',
+        },
+      ],
+    },
+    components: {
+      graphics: {
+        Logo: '/components/AdminLogo',
+        Icon: '/components/AdminIcon',
+      },
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },
