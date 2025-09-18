@@ -18,35 +18,6 @@ export const isAuthenticated: Access = ({ req: { user } }) => {
   return Boolean(user)
 }
 
-// Debug version to see what's happening
-export const isAuthenticatedDebug: Access = ({ req: { user, headers } }) => {
-  console.log('=== DEBUG ACCESS ===')
-  console.log(
-    'User:',
-    user ? { id: user.id, email: user.email, role: (user as UserWithRole).role } : 'No user',
-  )
-  console.log('Authorization header:', headers.get('authorization'))
-  console.log('X-API-Key header:', headers.get('x-api-key'))
-  console.log('===================')
-
-  return Boolean(user)
-}
-
-// Temporary - allow any authenticated user regardless of role
-export const isAnyAuthenticatedUser: Access = ({ req: { user } }) => {
-  console.log('=== ANY USER DEBUG ===')
-  console.log('User exists:', Boolean(user))
-  if (user) {
-    console.log('User details:', {
-      id: user.id,
-      email: user.email,
-      role: (user as UserWithRole).role,
-    })
-  }
-  console.log('=====================')
-  return Boolean(user)
-}
-
 // Check if user is admin
 export const isAdmin: Access = ({ req: { user } }) => {
   return Boolean(user && (user as UserWithRole).role === 'admin')
