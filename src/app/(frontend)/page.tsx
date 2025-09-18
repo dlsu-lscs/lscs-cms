@@ -54,8 +54,9 @@ export default async function HomePage() {
           </Button>
         </div>
       </div>
-      <footer className="text-sm font-extralight py-2 flex items-center">
-        <picture>
+      <footer className="text-sm font-extralight py-2 flex items-center justify-center">
+        Powered by Payload CMS
+        <picture className="ml-1">
           <source srcSet="https://avatars.githubusercontent.com/u/62968818?s=200&v=4" />
           <Image
             alt="LSCS Logo"
@@ -64,7 +65,6 @@ export default async function HomePage() {
             width={16}
           />
         </picture>
-        Powered by Payload CMS
       </footer>
     </div>
   )
