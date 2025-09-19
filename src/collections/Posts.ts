@@ -1,9 +1,12 @@
 // collections/Posts.ts
-import { isAuthenticated, isAdmin, isAdminOrSelf, isAdminOrEditor } from '@/services/access'
+import { isAuthenticated, isAdminOrSelf, isAdminOrEditor } from '@/services/access'
 import type { CollectionConfig } from 'payload'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
+  admin: {
+    useAsTitle: 'title',
+  },
   access: {
     // Only authenticated users can read user data
     read: isAuthenticated,
