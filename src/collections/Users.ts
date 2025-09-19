@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { isAdmin, isAdminOrSelf, isAuthenticated, isAdminField } from '@/services/access'
+import { isAdmin, isAdminOrSelf, isAdminField } from '@/services/access'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -9,7 +9,7 @@ export const Users: CollectionConfig = {
   auth: { useAPIKey: true, useSessions: true },
   access: {
     // Only authenticated users can read user data
-    read: isAuthenticated,
+    read: isAdminOrSelf,
     // Only admins can create new users
     create: isAdmin,
     // Users can update their own profile, admins can update anyone
