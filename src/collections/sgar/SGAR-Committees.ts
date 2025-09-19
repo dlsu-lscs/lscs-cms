@@ -5,6 +5,7 @@ export const SGAR_Committees: CollectionConfig = {
   slug: 'sgar_committees',
   admin: {
     useAsTitle: 'committee_name',
+    group: 'SGAR',
   },
   access: {
     // Only authenticated users can read user data
@@ -16,6 +17,7 @@ export const SGAR_Committees: CollectionConfig = {
     // Only admins can delete users
     delete: isAdminOrSelf,
   },
+
   fields: [
     { name: 'committee_name', type: 'text', required: true },
     {

@@ -5,6 +5,7 @@ export const SGAR_Exec_Board: CollectionConfig = {
   slug: 'sgar_exec_board',
   admin: {
     useAsTitle: 'full_name',
+    group: 'SGAR',
   },
   access: {
     // Only authenticated users can read user data

@@ -5,6 +5,7 @@ export const SGAR_Units: CollectionConfig = {
   slug: 'sgar_units',
   admin: {
     useAsTitle: 'unit_name',
+    group: 'SGAR',
   },
   access: {
     // Only authenticated users can read user data

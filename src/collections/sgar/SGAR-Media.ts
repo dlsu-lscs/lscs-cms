@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 
 export const SGAR_Media: CollectionConfig = {
   slug: 'sgar_media',
+  admin: { group: 'SGAR' },
   access: {
     // Only authenticated users can read user data
     read: isAuthenticated,

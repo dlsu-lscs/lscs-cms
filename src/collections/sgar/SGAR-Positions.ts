@@ -5,6 +5,7 @@ export const SGAR_Positions: CollectionConfig = {
   slug: 'sgar_positions',
   admin: {
     useAsTitle: 'position',
+    group: 'SGAR',
   },
   access: {
     // Only authenticated users can read user data
