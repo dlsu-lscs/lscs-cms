@@ -59,6 +59,7 @@ jobs:
         uses: returntocorp/semgrep-action@v1
         with:
           config: auto
+          output: semgrep.sarif
         continue-on-error: true
 
       # or (need SONAR_PROJECT_KEY, SONAR_ORGANIZATION, SONAR_TOKEN)
