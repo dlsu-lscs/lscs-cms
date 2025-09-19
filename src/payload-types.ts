@@ -70,6 +70,8 @@ export interface Config {
     users: User;
     media: Media;
     posts: Post;
+    sgar_units: SgarUnit;
+    sgar_exec_board: SgarExecBoard;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -79,6 +81,8 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    sgar_units: SgarUnitsSelect<false> | SgarUnitsSelect<true>;
+    sgar_exec_board: SgarExecBoardSelect<false> | SgarExecBoardSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -192,6 +196,33 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sgar_units".
+ */
+export interface SgarUnit {
+  id: number;
+  unit_name: string;
+  acronym: string;
+  description: string;
+  'form-link': string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sgar_exec_board".
+ */
+export interface SgarExecBoard {
+  id: number;
+  unit: number | SgarUnit;
+  full_name: string;
+  contact: string;
+  position: string;
+  photo?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -208,6 +239,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'sgar_units';
+        value: number | SgarUnit;
+      } | null)
+    | ({
+        relationTo: 'sgar_exec_board';
+        value: number | SgarExecBoard;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -305,6 +344,31 @@ export interface PostsSelect<T extends boolean = true> {
   title?: T;
   coverImage?: T;
   content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sgar_units_select".
+ */
+export interface SgarUnitsSelect<T extends boolean = true> {
+  unit_name?: T;
+  acronym?: T;
+  description?: T;
+  'form-link'?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sgar_exec_board_select".
+ */
+export interface SgarExecBoardSelect<T extends boolean = true> {
+  unit?: T;
+  full_name?: T;
+  contact?: T;
+  position?: T;
+  photo?: T;
   updatedAt?: T;
   createdAt?: T;
 }
