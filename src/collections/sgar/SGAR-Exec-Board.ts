@@ -30,15 +30,16 @@ export const SGAR_Exec_Board: CollectionConfig = {
       required: true,
     },
     {
-      name: 'position',
-      type: 'text',
-      required: true,
-    },
-    {
       name: 'photo',
       type: 'upload',
       relationTo: 'media',
       required: false,
+    },
+    {
+      name: 'position',
+      type: 'relationship',
+      relationTo: 'sgar_positions',
+      required: true,
     },
   ],
 }

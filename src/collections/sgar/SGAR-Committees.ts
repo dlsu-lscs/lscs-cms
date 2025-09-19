@@ -1,10 +1,10 @@
 import { isAuthenticated, isAdminOrEditor, isAdminOrSelf } from '@/services/access'
 import type { CollectionConfig } from 'payload'
 
-export const SGAR_Media: CollectionConfig = {
-  slug: 'sgar_media',
+export const SGAR_Committees: CollectionConfig = {
+  slug: 'sgar_committees',
   admin: {
-    useAsTitle: 'unit_name',
+    useAsTitle: 'committee_name',
   },
   access: {
     // Only authenticated users can read user data
@@ -17,6 +17,7 @@ export const SGAR_Media: CollectionConfig = {
     delete: isAdminOrSelf,
   },
   fields: [
+    { name: 'committee_name', type: 'text', required: true },
     {
       name: 'unit',
       type: 'relationship',
@@ -24,30 +25,19 @@ export const SGAR_Media: CollectionConfig = {
       required: true,
     },
     {
-      name: 'asset',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
+      name: 'description',
+      type: 'textarea',
+      required: true,
+      admin: {
+        rows: 10,
+      },
     },
     {
-      name: 'media_type',
-      type: 'select',
+      name: 'available_positions',
+      type: 'relationship',
+      relationTo: 'sgar_positions',
       required: true,
-      options: [
-        {
-          label: 'Logo',
-          value: 'logo',
-        },
-        {
-          label: 'Main Pub',
-          value: 'main_pub',
-        },
-        {
-          label: 'Org Chart',
-          value: 'org_chart',
-        },
-      ],
-      defaultValue: 'draft',
+      hasMany: true,
     },
   ],
 }
