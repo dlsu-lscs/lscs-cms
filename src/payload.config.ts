@@ -10,11 +10,9 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
-import { SGAR_Units } from './collections/sgar/SGAR-Units'
-import { SGAR_Exec_Board } from './collections/sgar/SGAR-Exec-Board'
-import { SGAR_Media } from './collections/sgar/SGAR-Media'
-import { SGAR_Positions } from './collections/sgar/SGAR-Positions'
-import { SGAR_Committees } from './collections/sgar/SGAR-Committees'
+import { LSCS_Article_Category } from './collections/lscs/LSCS-Article-Category'
+import { LSCS_Articles } from './collections/lscs/LSCS-Articles'
+import { LSCS_Article_Authors } from './collections/lscs/LSCS-Article-Authors'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -43,16 +41,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [
-    Users,
-    Media,
-    Posts,
-    SGAR_Units,
-    SGAR_Exec_Board,
-    SGAR_Media,
-    SGAR_Positions,
-    SGAR_Committees,
-  ],
+  collections: [Users, Media, Posts, LSCS_Article_Category, LSCS_Articles, LSCS_Article_Authors],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

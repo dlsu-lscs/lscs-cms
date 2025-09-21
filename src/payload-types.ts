@@ -70,11 +70,9 @@ export interface Config {
     users: User;
     media: Media;
     posts: Post;
-    sgar_units: SgarUnit;
-    sgar_exec_board: SgarExecBoard;
-    sgar_media: SgarMedia;
-    sgar_positions: SgarPosition;
-    sgar_committees: SgarCommittee;
+    'lscs-article-category': LscsArticleCategory;
+    'lscs-articles': LscsArticle;
+    'lscs-article-authors': LscsArticleAuthor;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -84,11 +82,9 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
-    sgar_units: SgarUnitsSelect<false> | SgarUnitsSelect<true>;
-    sgar_exec_board: SgarExecBoardSelect<false> | SgarExecBoardSelect<true>;
-    sgar_media: SgarMediaSelect<false> | SgarMediaSelect<true>;
-    sgar_positions: SgarPositionsSelect<false> | SgarPositionsSelect<true>;
-    sgar_committees: SgarCommitteesSelect<false> | SgarCommitteesSelect<true>;
+    'lscs-article-category': LscsArticleCategorySelect<false> | LscsArticleCategorySelect<true>;
+    'lscs-articles': LscsArticlesSelect<false> | LscsArticlesSelect<true>;
+    'lscs-article-authors': LscsArticleAuthorsSelect<false> | LscsArticleAuthorsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -202,65 +198,56 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_units".
+ * via the `definition` "lscs-article-category".
  */
-export interface SgarUnit {
+export interface LscsArticleCategory {
   id: number;
-  unit_name: string;
-  acronym: string;
-  description: string;
-  'form-link': string;
+  name: string;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_exec_board".
+ * via the `definition` "lscs-articles".
  */
-export interface SgarExecBoard {
+export interface LscsArticle {
   id: number;
-  unit: number | SgarUnit;
-  full_name: string;
-  contact: string;
-  photo?: (number | null) | Media;
-  position: number | SgarPosition;
+  title: string;
+  subtitle: string;
+  category: number | LscsArticleCategory;
+  author: number | LscsArticleAuthor;
+  tags?: string[] | null;
+  featuredImage?: (number | null) | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  'md-content'?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_positions".
+ * via the `definition` "lscs-article-authors".
  */
-export interface SgarPosition {
+export interface LscsArticleAuthor {
   id: number;
-  position: string;
-  status: 'open' | 'closed';
-  application_process: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_media".
- */
-export interface SgarMedia {
-  id: number;
-  sgar_unit: number | SgarUnit;
-  logo?: (number | null) | Media;
-  main_pub?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_committees".
- */
-export interface SgarCommittee {
-  id: number;
-  committee_name: string;
-  unit: number | SgarUnit;
-  description: string;
-  available_positions: (number | SgarPosition)[];
+  name: string;
+  bio?: string | null;
+  avatar?: (number | null) | Media;
+  user?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
 }
@@ -284,24 +271,16 @@ export interface PayloadLockedDocument {
         value: number | Post;
       } | null)
     | ({
-        relationTo: 'sgar_units';
-        value: number | SgarUnit;
+        relationTo: 'lscs-article-category';
+        value: number | LscsArticleCategory;
       } | null)
     | ({
-        relationTo: 'sgar_exec_board';
-        value: number | SgarExecBoard;
+        relationTo: 'lscs-articles';
+        value: number | LscsArticle;
       } | null)
     | ({
-        relationTo: 'sgar_media';
-        value: number | SgarMedia;
-      } | null)
-    | ({
-        relationTo: 'sgar_positions';
-        value: number | SgarPosition;
-      } | null)
-    | ({
-        relationTo: 'sgar_committees';
-        value: number | SgarCommittee;
+        relationTo: 'lscs-article-authors';
+        value: number | LscsArticleAuthor;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -404,60 +383,39 @@ export interface PostsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_units_select".
+ * via the `definition` "lscs-article-category_select".
  */
-export interface SgarUnitsSelect<T extends boolean = true> {
-  unit_name?: T;
-  acronym?: T;
-  description?: T;
-  'form-link'?: T;
+export interface LscsArticleCategorySelect<T extends boolean = true> {
+  name?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_exec_board_select".
+ * via the `definition` "lscs-articles_select".
  */
-export interface SgarExecBoardSelect<T extends boolean = true> {
-  unit?: T;
-  full_name?: T;
-  contact?: T;
-  photo?: T;
-  position?: T;
+export interface LscsArticlesSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  category?: T;
+  author?: T;
+  tags?: T;
+  featuredImage?: T;
+  content?: T;
+  'md-content'?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_media_select".
+ * via the `definition` "lscs-article-authors_select".
  */
-export interface SgarMediaSelect<T extends boolean = true> {
-  sgar_unit?: T;
-  logo?: T;
-  main_pub?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_positions_select".
- */
-export interface SgarPositionsSelect<T extends boolean = true> {
-  position?: T;
-  status?: T;
-  application_process?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_committees_select".
- */
-export interface SgarCommitteesSelect<T extends boolean = true> {
-  committee_name?: T;
-  unit?: T;
-  description?: T;
-  available_positions?: T;
+export interface LscsArticleAuthorsSelect<T extends boolean = true> {
+  name?: T;
+  bio?: T;
+  avatar?: T;
+  user?: T;
   updatedAt?: T;
   createdAt?: T;
 }
