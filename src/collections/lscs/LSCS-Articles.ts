@@ -7,7 +7,13 @@ import {
   defaultEditorFeatures,
   UploadFeature,
   RelationshipFeature,
+  FixedToolbarFeature,
+  HeadingFeature,
+  InlineToolbarFeature,
+  BlocksFeature,
+  HorizontalRuleFeature,
 } from '@payloadcms/richtext-lexical'
+import { Banner } from '@payloadcms/ui'
 
 export const LSCS_Articles: CollectionConfig = {
   slug: 'lscs-articles',
@@ -26,31 +32,38 @@ export const LSCS_Articles: CollectionConfig = {
     delete: isAdminOrSelf,
   },
   fields: [
-    { name: 'title', type: 'text', required: true },
     {
-      name: 'subtitle',
-      type: 'text',
-      required: true,
+      type: 'row',
+      fields: [
+        { name: 'title', type: 'text', required: true, admin: { width: '50%' } },
+        { name: 'subtitle', type: 'text', required: true, admin: { width: '50%' } },
+      ],
     },
     {
-      name: 'category',
-      type: 'relationship',
-      required: true,
-      relationTo: 'lscs-article-category',
+      type: 'row',
+      fields: [
+        {
+          name: 'category',
+          type: 'relationship',
+          required: true,
+          relationTo: 'lscs-article-category',
+        },
+        {
+          name: 'author',
+          type: 'relationship',
+          required: true,
+          relationTo: 'lscs-article-authors',
+        },
+        {
+          name: 'tags',
+          type: 'text',
+          required: false,
+          hasMany: true,
+          admin: { placeholder: 'Enter tags' },
+        },
+      ],
     },
-    {
-      name: 'author',
-      type: 'relationship',
-      required: true,
-      relationTo: 'lscs-article-authors',
-    },
-    {
-      name: 'tags',
-      type: 'text',
-      required: false,
-      hasMany: true,
-      admin: { placeholder: 'Enter tags' },
-    },
+
     {
       name: 'featuredImage',
       type: 'relationship',
@@ -62,11 +75,27 @@ export const LSCS_Articles: CollectionConfig = {
       name: 'content',
       type: 'richText',
       editor: lexicalEditor({
-        features: () =>
-          defaultEditorFeatures.filter(
-            (feature) =>
-              feature.key !== UploadFeature().key && feature.key !== RelationshipFeature().key,
-          ),
+        features: ({ rootFeatures }) => {
+          console.log(rootFeatures.map((f) => f.key))
+          const filtered = rootFeatures.filter(
+            (f) =>
+              f.key !== 'relationship' &&
+              f.key !== 'upload' &&
+              f.key !== 'align' &&
+              f.key !== 'indent' &&
+              f.key !== 'subscript' &&
+              f.key !== 'superscript',
+          )
+          return [
+            ...filtered,
+            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+            FixedToolbarFeature({
+              // remove alignment buttons
+            }),
+            InlineToolbarFeature(),
+            HorizontalRuleFeature(),
+          ]
+        },
       }),
       required: true,
     },
