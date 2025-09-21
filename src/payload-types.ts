@@ -79,7 +79,13 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    'sgar-units': {
+      media: 'sgar-media';
+      executives: 'sgar-exec-board';
+      committees: 'sgar-committees';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -210,6 +216,42 @@ export interface SgarUnit {
   slug: string;
   description: string;
   'form-link': string;
+  /**
+   * Media files associated with this unit (logo, publications, etc.)
+   */
+  media?: {
+    docs?: (number | SgarMedia)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  /**
+   * Executive board members for this unit
+   */
+  executives?: {
+    docs?: (number | SgarExecBoard)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  /**
+   * Committees under this unit
+   */
+  committees?: {
+    docs?: (number | SgarCommittee)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sgar-media".
+ */
+export interface SgarMedia {
+  id: number;
+  'sgar-unit': number | SgarUnit;
+  logo?: (number | null) | Media;
+  'main-pub'?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -236,18 +278,6 @@ export interface SgarPosition {
   position: string;
   status: 'open' | 'closed';
   'application-process': string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar-media".
- */
-export interface SgarMedia {
-  id: number;
-  'sgar-unit': number | SgarUnit;
-  logo?: (number | null) | Media;
-  'main-pub'?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -411,6 +441,9 @@ export interface SgarUnitsSelect<T extends boolean = true> {
   slug?: T;
   description?: T;
   'form-link'?: T;
+  media?: T;
+  executives?: T;
+  committees?: T;
   updatedAt?: T;
   createdAt?: T;
 }
