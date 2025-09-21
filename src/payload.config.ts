@@ -9,7 +9,6 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
-import { Posts } from './collections/Posts'
 import { LSCS_Article_Category } from './collections/lscs/LSCS-Article-Category'
 import { LSCS_Articles } from './collections/lscs/LSCS-Articles'
 import { LSCS_Article_Authors } from './collections/lscs/LSCS-Article-Authors'
@@ -41,7 +40,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Posts, LSCS_Article_Category, LSCS_Articles, LSCS_Article_Authors],
+  collections: [Users, Media, LSCS_Article_Category, LSCS_Articles, LSCS_Article_Authors],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
