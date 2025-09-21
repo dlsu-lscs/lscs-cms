@@ -2,9 +2,9 @@ import { isAuthenticated, isAdminOrEditor, isAdminOrSelf } from '@/services/acce
 import type { CollectionConfig } from 'payload'
 
 export const SGAR_Committees: CollectionConfig = {
-  slug: 'sgar_committees',
+  slug: 'sgar-committees',
   admin: {
-    useAsTitle: 'committee_name',
+    useAsTitle: 'committee-name',
     group: 'SGAR',
   },
   access: {
@@ -19,11 +19,11 @@ export const SGAR_Committees: CollectionConfig = {
   },
 
   fields: [
-    { name: 'committee_name', type: 'text', required: true },
+    { name: 'committee-name', type: 'text', required: true },
     {
       name: 'unit',
       type: 'relationship',
-      relationTo: 'sgar_units',
+      relationTo: 'sgar-units',
       required: true,
     },
     {
@@ -35,9 +35,9 @@ export const SGAR_Committees: CollectionConfig = {
       },
     },
     {
-      name: 'available_positions',
+      name: 'available-positions',
       type: 'relationship',
-      relationTo: 'sgar_positions',
+      relationTo: 'sgar-positions',
       required: true,
       hasMany: true,
     },

@@ -2,7 +2,7 @@ import { isAuthenticated, isAdminOrEditor, isAdminOrSelf } from '@/services/acce
 import type { CollectionConfig } from 'payload'
 
 export const SGAR_Positions: CollectionConfig = {
-  slug: 'sgar_positions',
+  slug: 'sgar-positions',
   admin: {
     useAsTitle: 'position',
     group: 'SGAR',
@@ -29,7 +29,7 @@ export const SGAR_Positions: CollectionConfig = {
       ],
     },
     {
-      name: 'application_process',
+      name: 'application-process',
       type: 'textarea',
       required: true,
       admin: {

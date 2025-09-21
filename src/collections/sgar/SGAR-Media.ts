@@ -2,7 +2,7 @@ import { isAuthenticated, isAdminOrEditor, isAdminOrSelf } from '@/services/acce
 import type { CollectionConfig } from 'payload'
 
 export const SGAR_Media: CollectionConfig = {
-  slug: 'sgar_media',
+  slug: 'sgar-media',
   admin: { group: 'SGAR' },
   access: {
     // Only authenticated users can read user data
@@ -16,9 +16,9 @@ export const SGAR_Media: CollectionConfig = {
   },
   fields: [
     {
-      name: 'sgar_unit',
+      name: 'sgar-unit',
       type: 'relationship',
-      relationTo: 'sgar_units',
+      relationTo: 'sgar-units',
       required: true,
       unique: true,
       index: true,
@@ -30,7 +30,7 @@ export const SGAR_Media: CollectionConfig = {
       required: false,
     },
     {
-      name: 'main_pub',
+      name: 'main-pub',
       type: 'upload',
       relationTo: 'media',
       required: false,

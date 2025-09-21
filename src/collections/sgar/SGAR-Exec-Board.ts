@@ -2,9 +2,9 @@ import type { CollectionConfig } from 'payload'
 import { isAuthenticated, isAdminOrEditor, isAdminOrSelf } from '@/services/access'
 
 export const SGAR_Exec_Board: CollectionConfig = {
-  slug: 'sgar_exec_board',
+  slug: 'sgar-exec-board',
   admin: {
-    useAsTitle: 'full_name',
+    useAsTitle: 'full-name',
     group: 'SGAR',
   },
   access: {
@@ -21,10 +21,10 @@ export const SGAR_Exec_Board: CollectionConfig = {
     {
       name: 'unit',
       type: 'relationship',
-      relationTo: 'sgar_units',
+      relationTo: 'sgar-units',
       required: true,
     },
-    { name: 'full_name', type: 'text', required: true },
+    { name: 'full-name', type: 'text', required: true },
     {
       name: 'contact',
       type: 'text',
@@ -39,7 +39,7 @@ export const SGAR_Exec_Board: CollectionConfig = {
     {
       name: 'position',
       type: 'relationship',
-      relationTo: 'sgar_positions',
+      relationTo: 'sgar-positions',
       required: true,
     },
   ],

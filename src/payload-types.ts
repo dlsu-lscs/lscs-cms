@@ -70,11 +70,11 @@ export interface Config {
     users: User;
     media: Media;
     posts: Post;
-    sgar_units: SgarUnit;
-    sgar_exec_board: SgarExecBoard;
-    sgar_media: SgarMedia;
-    sgar_positions: SgarPosition;
-    sgar_committees: SgarCommittee;
+    'sgar-units': SgarUnit;
+    'sgar-exec-board': SgarExecBoard;
+    'sgar-media': SgarMedia;
+    'sgar-positions': SgarPosition;
+    'sgar-committees': SgarCommittee;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -84,11 +84,11 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
-    sgar_units: SgarUnitsSelect<false> | SgarUnitsSelect<true>;
-    sgar_exec_board: SgarExecBoardSelect<false> | SgarExecBoardSelect<true>;
-    sgar_media: SgarMediaSelect<false> | SgarMediaSelect<true>;
-    sgar_positions: SgarPositionsSelect<false> | SgarPositionsSelect<true>;
-    sgar_committees: SgarCommitteesSelect<false> | SgarCommitteesSelect<true>;
+    'sgar-units': SgarUnitsSelect<false> | SgarUnitsSelect<true>;
+    'sgar-exec-board': SgarExecBoardSelect<false> | SgarExecBoardSelect<true>;
+    'sgar-media': SgarMediaSelect<false> | SgarMediaSelect<true>;
+    'sgar-positions': SgarPositionsSelect<false> | SgarPositionsSelect<true>;
+    'sgar-committees': SgarCommitteesSelect<false> | SgarCommitteesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -202,12 +202,12 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_units".
+ * via the `definition` "sgar-units".
  */
 export interface SgarUnit {
   id: number;
-  unit_name: string;
-  acronym: string;
+  'unit-name': string;
+  slug: string;
   description: string;
   'form-link': string;
   updatedAt: string;
@@ -215,12 +215,12 @@ export interface SgarUnit {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_exec_board".
+ * via the `definition` "sgar-exec-board".
  */
 export interface SgarExecBoard {
   id: number;
   unit: number | SgarUnit;
-  full_name: string;
+  'full-name': string;
   contact: string;
   photo?: (number | null) | Media;
   position: number | SgarPosition;
@@ -229,38 +229,38 @@ export interface SgarExecBoard {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_positions".
+ * via the `definition` "sgar-positions".
  */
 export interface SgarPosition {
   id: number;
   position: string;
   status: 'open' | 'closed';
-  application_process: string;
+  'application-process': string;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_media".
+ * via the `definition` "sgar-media".
  */
 export interface SgarMedia {
   id: number;
-  sgar_unit: number | SgarUnit;
+  'sgar-unit': number | SgarUnit;
   logo?: (number | null) | Media;
-  main_pub?: (number | null) | Media;
+  'main-pub'?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_committees".
+ * via the `definition` "sgar-committees".
  */
 export interface SgarCommittee {
   id: number;
-  committee_name: string;
+  'committee-name': string;
   unit: number | SgarUnit;
   description: string;
-  available_positions: (number | SgarPosition)[];
+  'available-positions': (number | SgarPosition)[];
   updatedAt: string;
   createdAt: string;
 }
@@ -284,23 +284,23 @@ export interface PayloadLockedDocument {
         value: number | Post;
       } | null)
     | ({
-        relationTo: 'sgar_units';
+        relationTo: 'sgar-units';
         value: number | SgarUnit;
       } | null)
     | ({
-        relationTo: 'sgar_exec_board';
+        relationTo: 'sgar-exec-board';
         value: number | SgarExecBoard;
       } | null)
     | ({
-        relationTo: 'sgar_media';
+        relationTo: 'sgar-media';
         value: number | SgarMedia;
       } | null)
     | ({
-        relationTo: 'sgar_positions';
+        relationTo: 'sgar-positions';
         value: number | SgarPosition;
       } | null)
     | ({
-        relationTo: 'sgar_committees';
+        relationTo: 'sgar-committees';
         value: number | SgarCommittee;
       } | null);
   globalSlug?: string | null;
@@ -404,11 +404,11 @@ export interface PostsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_units_select".
+ * via the `definition` "sgar-units_select".
  */
 export interface SgarUnitsSelect<T extends boolean = true> {
-  unit_name?: T;
-  acronym?: T;
+  'unit-name'?: T;
+  slug?: T;
   description?: T;
   'form-link'?: T;
   updatedAt?: T;
@@ -416,11 +416,11 @@ export interface SgarUnitsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_exec_board_select".
+ * via the `definition` "sgar-exec-board_select".
  */
 export interface SgarExecBoardSelect<T extends boolean = true> {
   unit?: T;
-  full_name?: T;
+  'full-name'?: T;
   contact?: T;
   photo?: T;
   position?: T;
@@ -429,35 +429,35 @@ export interface SgarExecBoardSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_media_select".
+ * via the `definition` "sgar-media_select".
  */
 export interface SgarMediaSelect<T extends boolean = true> {
-  sgar_unit?: T;
+  'sgar-unit'?: T;
   logo?: T;
-  main_pub?: T;
+  'main-pub'?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_positions_select".
+ * via the `definition` "sgar-positions_select".
  */
 export interface SgarPositionsSelect<T extends boolean = true> {
   position?: T;
   status?: T;
-  application_process?: T;
+  'application-process'?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar_committees_select".
+ * via the `definition` "sgar-committees_select".
  */
 export interface SgarCommitteesSelect<T extends boolean = true> {
-  committee_name?: T;
+  'committee-name'?: T;
   unit?: T;
   description?: T;
-  available_positions?: T;
+  'available-positions'?: T;
   updatedAt?: T;
   createdAt?: T;
 }

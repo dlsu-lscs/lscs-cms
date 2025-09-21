@@ -2,9 +2,9 @@ import { isAuthenticated, isAdminOrEditor, isAdminOrSelf } from '@/services/acce
 import type { CollectionConfig } from 'payload'
 
 export const SGAR_Units: CollectionConfig = {
-  slug: 'sgar_units',
+  slug: 'sgar-units',
   admin: {
-    useAsTitle: 'unit_name',
+    useAsTitle: 'unit-name',
     group: 'SGAR',
   },
   access: {
@@ -18,9 +18,9 @@ export const SGAR_Units: CollectionConfig = {
     delete: isAdminOrSelf,
   },
   fields: [
-    { name: 'unit_name', type: 'text', required: true },
+    { name: 'unit-name', type: 'text', required: true },
     {
-      name: 'acronym',
+      name: 'slug',
       type: 'text',
       required: true,
     },
