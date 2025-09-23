@@ -1,4 +1,4 @@
-import { isAuthenticated, isAdminOrEditor, isAdminOrSelf } from '@/services/access'
+import { isAuthenticated, isAdminOrEditor, isAdminOrSelf, hasRole } from '@/services/access'
 import type { CollectionConfig } from 'payload'
 import { generateMarkdownContent, cleanupMarkdownField } from '@/hooks/generateMarkdownContent'
 
@@ -23,7 +23,7 @@ export const LSCS_Articles: CollectionConfig = {
   },
   access: {
     // Only authenticated users can read user data
-    read: isAuthenticated,
+    read: hasRole,
     // Only admins can create new users
     create: isAdminOrEditor,
     // Users can update their own profile, admins can update anyone
@@ -76,7 +76,7 @@ export const LSCS_Articles: CollectionConfig = {
       type: 'richText',
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
-          console.log(rootFeatures.map((f) => f.key))
+          // console.log(rootFeatures.map((f) => f.key))
           const filtered = rootFeatures.filter(
             (f) =>
               f.key !== 'relationship' &&

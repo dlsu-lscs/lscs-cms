@@ -1,17 +1,21 @@
 import type { CollectionConfig } from 'payload'
-import { isAdmin, isAdminOrSelf, isAdminField } from '@/services/access'
+import { isAdmin, isAdminOrSelf, isAdminField, isAuthenticated } from '@/services/access'
+import { deleteLinkedAccounts } from 'payload-auth-plugin/collection/hooks'
+import { AdminAccounts } from './Accounts'
 
-export const Users: CollectionConfig = {
+export const AdminUsers: CollectionConfig = {
   slug: 'users',
   admin: {
+    defaultColumns: ['firstName', 'email'],
     useAsTitle: 'email',
+    group: 'Admin',
   },
   auth: { useAPIKey: true, useSessions: true },
   access: {
     // Only authenticated users can read user data
     read: isAdminOrSelf,
-    // Only admins can create new users
-    create: isAdmin,
+
+    create: isAuthenticated,
     // Users can update their own profile, admins can update anyone
     update: isAdminOrSelf,
     // Only admins can delete users
@@ -23,7 +27,7 @@ export const Users: CollectionConfig = {
       name: 'role',
       type: 'select',
       required: true,
-      defaultValue: 'viewer',
+      defaultValue: 'none',
       options: [
         {
           label: 'Admin',
@@ -36,6 +40,10 @@ export const Users: CollectionConfig = {
         {
           label: 'Viewer',
           value: 'viewer',
+        },
+        {
+          label: 'None',
+          value: 'none',
         },
       ],
       access: {
@@ -52,4 +60,8 @@ export const Users: CollectionConfig = {
       type: 'text',
     },
   ],
+  timestamps: true,
+  hooks: {
+    afterDelete: [deleteLinkedAccounts(AdminAccounts.slug)],
+  },
 }

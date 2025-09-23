@@ -30,7 +30,7 @@ export const isAdminOrEditor: Access = ({ req: { user } }) => {
 }
 
 // Check if user is admin, editor, or viewer (any authenticated user)
-export const isAnyRole: Access = ({ req: { user } }) => {
+export const hasRole: Access = ({ req: { user } }) => {
   const userRole = (user as UserWithRole)?.role
   return Boolean(user && ['admin', 'editor', 'viewer'].includes(userRole))
 }

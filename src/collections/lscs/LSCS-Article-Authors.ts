@@ -1,4 +1,4 @@
-import { isAuthenticated, isAdminOrEditor, isAdminOrSelf } from '@/services/access'
+import { isAuthenticated, isAdminOrEditor, isAdminOrSelf, hasRole } from '@/services/access'
 import { CollectionConfig } from 'payload'
 
 export const LSCS_Article_Authors: CollectionConfig = {
@@ -9,7 +9,7 @@ export const LSCS_Article_Authors: CollectionConfig = {
   },
   access: {
     // Only authenticated users can read user data
-    read: isAuthenticated,
+    read: hasRole,
     // Only admins can create new users
     create: isAdminOrEditor,
     // Users can update their own profile, admins can update anyone
