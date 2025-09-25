@@ -18,7 +18,7 @@ jobs:
   ############### COOLIFY (selfhosted) ################
   deploy-prod-coolify:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event.workflow_run.conclusion == 'success' }}
     steps:
       # NOTE: Needs COOLIFY_WEBHOOK and COOLIFY_TOKEN
       # - You need to create a Coolify API Token and add it to your GitHub repository secrets.
