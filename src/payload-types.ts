@@ -68,8 +68,11 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    accounts: Account;
     media: Media;
-    posts: Post;
+    'lscs-article-category': LscsArticleCategory;
+    'lscs-articles': LscsArticle;
+    'lscs-article-authors': LscsArticleAuthor;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -77,8 +80,11 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    accounts: AccountsSelect<false> | AccountsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    posts: PostsSelect<false> | PostsSelect<true>;
+    'lscs-article-category': LscsArticleCategorySelect<false> | LscsArticleCategorySelect<true>;
+    'lscs-articles': LscsArticlesSelect<false> | LscsArticlesSelect<true>;
+    'lscs-article-authors': LscsArticleAuthorsSelect<false> | LscsArticleAuthorsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -121,7 +127,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
-  role: 'admin' | 'editor' | 'viewer';
+  role: 'admin' | 'editor' | 'viewer' | 'none';
   firstName?: string | null;
   lastName?: string | null;
   updatedAt: string;
@@ -147,6 +153,46 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "accounts".
+ */
+export interface Account {
+  id: number;
+  name?: string | null;
+  picture?: string | null;
+  user: number | User;
+  issuerName: string;
+  scope?: string | null;
+  sub: string;
+  access_token?: string | null;
+  passkey?: {
+    credentialId: string;
+    publicKey:
+      | {
+          [k: string]: unknown;
+        }
+      | unknown[]
+      | string
+      | number
+      | boolean
+      | null;
+    counter: number;
+    transports:
+      | {
+          [k: string]: unknown;
+        }
+      | unknown[]
+      | string
+      | number
+      | boolean
+      | null;
+    deviceType: string;
+    backedUp: boolean;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -166,12 +212,26 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
+ * via the `definition` "lscs-article-category".
  */
-export interface Post {
+export interface LscsArticleCategory {
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lscs-articles".
+ */
+export interface LscsArticle {
   id: number;
   title: string;
-  coverImage?: (number | null) | Media;
+  subtitle: string;
+  category: number | LscsArticleCategory;
+  author: number | LscsArticleAuthor;
+  tags?: string[] | null;
+  featuredImage?: (number | null) | Media;
   content: {
     root: {
       type: string;
@@ -187,6 +247,21 @@ export interface Post {
     };
     [k: string]: unknown;
   };
+  'md-content'?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lscs-article-authors".
+ */
+export interface LscsArticleAuthor {
+  id: number;
+  name: string;
+  bio?: string | null;
+  avatar?: (number | null) | Media;
+  user?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
 }
@@ -202,12 +277,24 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
+        relationTo: 'accounts';
+        value: number | Account;
+      } | null)
+    | ({
         relationTo: 'media';
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'posts';
-        value: number | Post;
+        relationTo: 'lscs-article-category';
+        value: number | LscsArticleCategory;
+      } | null)
+    | ({
+        relationTo: 'lscs-articles';
+        value: number | LscsArticle;
+      } | null)
+    | ({
+        relationTo: 'lscs-article-authors';
+        value: number | LscsArticleAuthor;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -281,6 +368,31 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "accounts_select".
+ */
+export interface AccountsSelect<T extends boolean = true> {
+  name?: T;
+  picture?: T;
+  user?: T;
+  issuerName?: T;
+  scope?: T;
+  sub?: T;
+  access_token?: T;
+  passkey?:
+    | T
+    | {
+        credentialId?: T;
+        publicKey?: T;
+        counter?: T;
+        transports?: T;
+        deviceType?: T;
+        backedUp?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
@@ -299,12 +411,39 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts_select".
+ * via the `definition` "lscs-article-category_select".
  */
-export interface PostsSelect<T extends boolean = true> {
+export interface LscsArticleCategorySelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lscs-articles_select".
+ */
+export interface LscsArticlesSelect<T extends boolean = true> {
   title?: T;
-  coverImage?: T;
+  subtitle?: T;
+  category?: T;
+  author?: T;
+  tags?: T;
+  featuredImage?: T;
   content?: T;
+  'md-content'?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lscs-article-authors_select".
+ */
+export interface LscsArticleAuthorsSelect<T extends boolean = true> {
+  name?: T;
+  bio?: T;
+  avatar?: T;
+  user?: T;
   updatedAt?: T;
   createdAt?: T;
 }

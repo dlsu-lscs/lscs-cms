@@ -1,9 +1,12 @@
-import { hasRole, isAdminOrEditor, isAdminOrSelf, isAuthenticated } from '@/services/access'
+import { isAuthenticated, isAdminOrEditor, isAdminOrSelf, hasRole } from '@/services/access'
 import type { CollectionConfig } from 'payload'
 
-export const Media: CollectionConfig = {
-  slug: 'media',
-
+export const LSCS_Article_Category: CollectionConfig = {
+  slug: 'lscs-article-category',
+  admin: {
+    useAsTitle: 'name',
+    group: 'LSCS',
+  },
   access: {
     // Only authenticated users can read user data
     read: hasRole,
@@ -14,12 +17,5 @@ export const Media: CollectionConfig = {
     // Only admins can delete users
     delete: isAdminOrSelf,
   },
-  fields: [
-    {
-      name: 'alt',
-      type: 'text',
-      required: true,
-    },
-  ],
-  upload: true,
+  fields: [{ name: 'name', type: 'text', required: true }],
 }
