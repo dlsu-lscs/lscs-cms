@@ -2,7 +2,7 @@ import { adminAuthClient } from '@/lib/auth'
 import { useEffect, useState } from 'react'
 
 export const useSession = () => {
-  const [loading, setLoading] = useState<boolean>()
+  const [loading, setLoading] = useState<boolean>(true)
   const [session, setSession] = useState<{
     data: any
     message: string

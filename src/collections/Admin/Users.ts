@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { isAdmin, isAdminOrSelf, isAdminField, isAuthenticated } from '@/services/access'
 import { deleteLinkedAccounts } from 'payload-auth-plugin/collection/hooks'
 import { AdminAccounts } from './Accounts'
+import { validateEmail } from '@/hooks/validateEmail'
 
 export const AdminUsers: CollectionConfig = {
   slug: 'users',
@@ -63,5 +64,6 @@ export const AdminUsers: CollectionConfig = {
   timestamps: true,
   hooks: {
     afterDelete: [deleteLinkedAccounts(AdminAccounts.slug)],
+    beforeChange: [validateEmail],
   },
 }
