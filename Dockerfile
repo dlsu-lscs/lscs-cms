@@ -42,6 +42,7 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
@@ -50,6 +51,7 @@ RUN adduser --system --uid 1001 nextjs
 
 # Remove this line if you do not have this folder
 COPY --from=builder /app/public ./public
+
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
@@ -63,9 +65,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 RUN mkdir -p /app/media && chown -R nextjs:nodejs /app/media
 
 USER nextjs
-
 EXPOSE 3000
-
 ENV PORT=3000
 
 # server.js is created by next build from the standalone output

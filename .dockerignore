@@ -3,3 +3,16 @@ node_modules
 npm-debug.log
 yarn-error.log
 .next/cache
+eslint.config.mjs
+.eslintrc*
+.eslintignore
+*.test.*
+*.spec.*
+*.md
+*.log
+node_modules/
+src/
+test/
+coverage/
+.vscode/
+.idea/
