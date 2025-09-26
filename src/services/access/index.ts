@@ -58,6 +58,9 @@ export const isAdminOrOwner: Access = ({ req: { user }, data }) => {
   if (userRole === 'admin') return true
 
   // Check if user uploaded this file (media files have an uploadedBy field)
+
+  if (data?.createdBy) return data?.createdBy === user.id
+
   return data?.uploadedBy === user.id
 }
 

@@ -71,30 +71,16 @@ export interface Config {
     media: Media;
     posts: Post;
     'sgar-units': SgarUnit;
-    'sgar-exec-board': SgarExecBoard;
-    'sgar-media': SgarMedia;
-    'sgar-positions': SgarPosition;
-    'sgar-committees': SgarCommittee;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {
-    'sgar-units': {
-      media: 'sgar-media';
-      executives: 'sgar-exec-board';
-      committees: 'sgar-committees';
-    };
-  };
+  collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     'sgar-units': SgarUnitsSelect<false> | SgarUnitsSelect<true>;
-    'sgar-exec-board': SgarExecBoardSelect<false> | SgarExecBoardSelect<true>;
-    'sgar-media': SgarMediaSelect<false> | SgarMediaSelect<true>;
-    'sgar-positions': SgarPositionsSelect<false> | SgarPositionsSelect<true>;
-    'sgar-committees': SgarCommitteesSelect<false> | SgarCommitteesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -192,7 +178,7 @@ export interface Post {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -216,81 +202,32 @@ export interface SgarUnit {
   slug: string;
   description: string;
   'form-link': string;
-  /**
-   * Media files associated with this unit (logo, publications, etc.)
-   */
-  media?: {
-    docs?: (number | SgarMedia)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  /**
-   * Executive board members for this unit
-   */
-  executives?: {
-    docs?: (number | SgarExecBoard)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  /**
-   * Committees under this unit
-   */
-  committees?: {
-    docs?: (number | SgarCommittee)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar-media".
- */
-export interface SgarMedia {
-  id: number;
-  'sgar-unit': number | SgarUnit;
   logo?: (number | null) | Media;
   'main-pub'?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar-exec-board".
- */
-export interface SgarExecBoard {
-  id: number;
-  unit: number | SgarUnit;
-  'full-name': string;
-  contact: string;
-  photo?: (number | null) | Media;
-  position: number | SgarPosition;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar-positions".
- */
-export interface SgarPosition {
-  id: number;
-  position: string;
-  status: 'open' | 'closed';
-  'application-process': string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar-committees".
- */
-export interface SgarCommittee {
-  id: number;
-  'committee-name': string;
-  unit: number | SgarUnit;
-  description: string;
-  'available-positions': (number | SgarPosition)[];
+  'application-process'?: (number | null) | Media;
+  'executive-board'?:
+    | {
+        'full-name': string;
+        position: string;
+        contact: string;
+        photo?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  committees?:
+    | {
+        'committee-name': string;
+        description: string;
+        position?:
+          | {
+              'position-name': string;
+              status: 'open' | 'closed';
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -316,22 +253,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'sgar-units';
         value: number | SgarUnit;
-      } | null)
-    | ({
-        relationTo: 'sgar-exec-board';
-        value: number | SgarExecBoard;
-      } | null)
-    | ({
-        relationTo: 'sgar-media';
-        value: number | SgarMedia;
-      } | null)
-    | ({
-        relationTo: 'sgar-positions';
-        value: number | SgarPosition;
-      } | null)
-    | ({
-        relationTo: 'sgar-committees';
-        value: number | SgarCommittee;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -441,56 +362,32 @@ export interface SgarUnitsSelect<T extends boolean = true> {
   slug?: T;
   description?: T;
   'form-link'?: T;
-  media?: T;
-  executives?: T;
-  committees?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar-exec-board_select".
- */
-export interface SgarExecBoardSelect<T extends boolean = true> {
-  unit?: T;
-  'full-name'?: T;
-  contact?: T;
-  photo?: T;
-  position?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar-media_select".
- */
-export interface SgarMediaSelect<T extends boolean = true> {
-  'sgar-unit'?: T;
   logo?: T;
   'main-pub'?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar-positions_select".
- */
-export interface SgarPositionsSelect<T extends boolean = true> {
-  position?: T;
-  status?: T;
   'application-process'?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar-committees_select".
- */
-export interface SgarCommitteesSelect<T extends boolean = true> {
-  'committee-name'?: T;
-  unit?: T;
-  description?: T;
-  'available-positions'?: T;
+  'executive-board'?:
+    | T
+    | {
+        'full-name'?: T;
+        position?: T;
+        contact?: T;
+        photo?: T;
+        id?: T;
+      };
+  committees?:
+    | T
+    | {
+        'committee-name'?: T;
+        description?: T;
+        position?:
+          | T
+          | {
+              'position-name'?: T;
+              status?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

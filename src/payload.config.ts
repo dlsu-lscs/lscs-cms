@@ -11,10 +11,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
 import { SGAR_Units } from './collections/sgar/SGAR-Units'
-import { SGAR_Exec_Board } from './collections/sgar/SGAR-Exec-Board'
-import { SGAR_Media } from './collections/sgar/SGAR-Media'
-import { SGAR_Positions } from './collections/sgar/SGAR-Positions'
-import { SGAR_Committees } from './collections/sgar/SGAR-Committees'
+import { s3Storage } from '@payloadcms/storage-s3'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -43,16 +40,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [
-    Users,
-    Media,
-    Posts,
-    SGAR_Units,
-    SGAR_Exec_Board,
-    SGAR_Media,
-    SGAR_Positions,
-    SGAR_Committees,
-  ],
+  collections: [Users, Media, Posts, SGAR_Units],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -66,6 +54,20 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    // storage-adapter-placeholder
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: process.env.S3_BUCKET || '',
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+        },
+        endpoint: process.env.S3_ENDPOINT,
+        region: process.env.S3_REGION,
+        // ... Other S3 configuration
+      },
+    }),
   ],
 })

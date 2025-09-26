@@ -1,5 +1,6 @@
 import { isAuthenticated, isAdminOrEditor, isAdminOrSelf } from '@/services/access'
 import type { CollectionConfig } from 'payload'
+import { array } from 'payload/shared'
 
 export const SGAR_Units: CollectionConfig = {
   slug: 'sgar-units',
@@ -48,36 +49,163 @@ export const SGAR_Units: CollectionConfig = {
       ],
     },
 
-    // Reverse relationships - show related records
+    // PUBS
     {
-      name: 'media',
-      type: 'join',
-      collection: 'sgar-media',
-      on: 'sgar-unit',
-      maxDepth: 2,
-      admin: {
-        description: 'Media files associated with this unit (logo, publications, etc.)',
-      },
+      type: 'row',
+      fields: [
+        {
+          name: 'logo',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+        },
+        {
+          name: 'main-pub',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+        },
+        {
+          name: 'application-process',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+        },
+      ],
     },
+
+    // EXECUTIVE BOARD
     {
-      name: 'executives',
-      type: 'join',
-      collection: 'sgar-exec-board',
-      on: 'unit',
-      maxDepth: 2,
-      admin: {
-        description: 'Executive board members for this unit',
-      },
+      name: 'executive-board',
+      type: 'array',
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'full-name',
+              type: 'text',
+              required: true,
+            },
+            {
+              name: 'position',
+              type: 'text',
+              required: true,
+            },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'contact',
+              type: 'text',
+              required: true,
+            },
+            {
+              name: 'photo',
+              type: 'upload',
+              relationTo: 'media',
+              required: false,
+            },
+          ],
+        },
+      ],
     },
+
+    // COMMITTEES
     {
       name: 'committees',
-      type: 'join',
-      collection: 'sgar-committees',
-      on: 'unit',
-      maxDepth: 2,
-      admin: {
-        description: 'Committees under this unit',
-      },
+      type: 'array',
+      fields: [
+        { name: 'committee-name', type: 'text', required: true },
+        {
+          name: 'description',
+          type: 'textarea',
+          required: true,
+          admin: {
+            rows: 5,
+          },
+        },
+        {
+          name: 'position',
+          type: 'array',
+          fields: [
+            {
+              type: 'row',
+              fields: [
+                { name: 'position-name', type: 'text', required: true },
+                {
+                  name: 'status',
+                  type: 'select',
+                  required: true,
+                  options: [
+                    { label: 'open', value: 'open' },
+                    { label: 'closed', value: 'closed' },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
   ],
+  // hooks: {
+  //   afterChange: [
+  //     async ({ req, doc, operation }) => {
+  //       if (operation === 'create') {
+  //         const unitId = doc.id
+  //         // Common denormalized fields
+  //         const pseudoFields = {
+  //           unit: unitId,
+  //           'unit-name__pseudo': doc['unit-name'],
+  //           slug__pseudo: doc['slug'],
+  //           description__pseudo: doc['description'],
+  //           'form-link__pseudo': doc['form-link'],
+  //         }
+  //         // Create SGAR-Committee (minimal required fields)
+  //         await req.payload.create({
+  //           collection: 'sgar-committees',
+  //           data: {
+  //             ...pseudoFields,
+  //             'committee-name': `Default Committee for ${doc['unit-name']}`,
+  //             description: doc['description'] || '',
+  //             'available-positions': [],
+  //           },
+  //         })
+  //         // Create SGAR-Exec-Board (minimal required fields)
+  //         await req.payload.create({
+  //           collection: 'sgar-exec-board',
+  //           data: {
+  //             ...pseudoFields,
+  //             'full-name': `Default Executive for ${doc['unit-name']}`,
+  //             contact: '',
+  //             position: null,
+  //           },
+  //         })
+  //         // Create SGAR-Media (minimal required fields)
+  //         await req.payload.create({
+  //           collection: 'sgar-media',
+  //           data: {
+  //             ...pseudoFields,
+  //             'sgar-unit': unitId,
+  //             logo: null,
+  //             'main-pub': null,
+  //             'application-process': null,
+  //           },
+  //         })
+  //         // Create SGAR-Positions (minimal required fields)
+  //         await req.payload.create({
+  //           collection: 'sgar-positions',
+  //           data: {
+  //             ...pseudoFields,
+  //             position: `Default Position for ${doc['unit-name']}`,
+  //             status: 'open',
+  //           },
+  //         })
+  //       }
+  //     },
+  //   ],
+  // },
 }
