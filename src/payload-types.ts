@@ -204,12 +204,13 @@ export interface SgarUnit {
   'form-link': string;
   logo?: (number | null) | Media;
   'main-pub'?: (number | null) | Media;
-  'application-process'?: (number | null) | Media;
+  'application-process'?: string | null;
   'executive-board'?:
     | {
         'full-name': string;
         position: string;
-        contact: string;
+        email: string;
+        'telegram-username'?: string | null;
         photo?: (number | null) | Media;
         id?: string | null;
       }[]
@@ -218,6 +219,7 @@ export interface SgarUnit {
     | {
         'committee-name': string;
         description: string;
+        requirements?: string | null;
         position?:
           | {
               'position-name': string;
@@ -370,7 +372,8 @@ export interface SgarUnitsSelect<T extends boolean = true> {
     | {
         'full-name'?: T;
         position?: T;
-        contact?: T;
+        email?: T;
+        'telegram-username'?: T;
         photo?: T;
         id?: T;
       };
@@ -379,6 +382,7 @@ export interface SgarUnitsSelect<T extends boolean = true> {
     | {
         'committee-name'?: T;
         description?: T;
+        requirements?: T;
         position?:
           | T
           | {

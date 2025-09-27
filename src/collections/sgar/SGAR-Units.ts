@@ -65,13 +65,13 @@ export const SGAR_Units: CollectionConfig = {
           relationTo: 'media',
           required: false,
         },
-        {
-          name: 'application-process',
-          type: 'upload',
-          relationTo: 'media',
-          required: false,
-        },
       ],
+    },
+    {
+      name: 'application-process',
+      type: 'textarea',
+      admin: { rows: 8 },
+      required: false,
     },
 
     // EXECUTIVE BOARD
@@ -98,17 +98,22 @@ export const SGAR_Units: CollectionConfig = {
           type: 'row',
           fields: [
             {
-              name: 'contact',
+              name: 'email',
               type: 'text',
               required: true,
             },
             {
-              name: 'photo',
-              type: 'upload',
-              relationTo: 'media',
+              name: 'telegram-username',
+              type: 'text',
               required: false,
             },
           ],
+        },
+        {
+          name: 'photo',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
         },
       ],
     },
@@ -120,12 +125,25 @@ export const SGAR_Units: CollectionConfig = {
       fields: [
         { name: 'committee-name', type: 'text', required: true },
         {
-          name: 'description',
-          type: 'textarea',
-          required: true,
-          admin: {
-            rows: 5,
-          },
+          type: 'row',
+          fields: [
+            {
+              name: 'description',
+              type: 'textarea',
+              required: true,
+              admin: {
+                rows: 5,
+              },
+            },
+            {
+              name: 'requirements',
+              type: 'textarea',
+              required: false,
+              admin: {
+                rows: 5,
+              },
+            },
+          ],
         },
         {
           name: 'position',
