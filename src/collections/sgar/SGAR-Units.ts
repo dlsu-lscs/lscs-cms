@@ -20,153 +20,189 @@ export const SGAR_Units: CollectionConfig = {
   },
   fields: [
     {
-      type: 'row',
-      fields: [
-        { name: 'unit-name', type: 'text', required: true },
+      type: 'tabs',
+      tabs: [
         {
-          name: 'slug',
-          type: 'text',
-          required: true,
-        },
-      ],
-    },
-    {
-      type: 'row',
-      fields: [
-        {
-          name: 'description',
-          type: 'textarea',
-          required: true,
-          admin: {
-            rows: 5,
-          },
-        },
-        {
-          name: 'form-link',
-          type: 'text',
-          required: true,
-        },
-      ],
-    },
-
-    // PUBS
-    {
-      type: 'row',
-      fields: [
-        {
-          name: 'logo',
-          type: 'upload',
-          relationTo: 'media',
-          required: false,
-        },
-        {
-          name: 'main-pub',
-          type: 'upload',
-          relationTo: 'media',
-          required: false,
-        },
-      ],
-    },
-
-    {
-      type: 'row',
-      fields: [
-        {
-          name: 'application-process',
-          type: 'textarea',
-          admin: { rows: 8 },
-          required: false,
-        },
-        { name: 'application-timeline', type: 'textarea', admin: { rows: 8 }, required: false },
-      ],
-    },
-
-    // EXECUTIVE BOARD
-    {
-      name: 'executive-board',
-      type: 'array',
-      fields: [
-        {
-          type: 'row',
-          fields: [
-            {
-              name: 'full-name',
-              type: 'text',
-              required: true,
-            },
-            {
-              name: 'position',
-              type: 'text',
-              required: true,
-            },
-          ],
-        },
-        {
-          type: 'row',
-          fields: [
-            {
-              name: 'email',
-              type: 'text',
-              required: true,
-            },
-            {
-              name: 'telegram-username',
-              type: 'text',
-              required: false,
-            },
-          ],
-        },
-        {
-          name: 'photo',
-          type: 'upload',
-          relationTo: 'media',
-          required: false,
-        },
-      ],
-    },
-
-    // COMMITTEES
-    {
-      name: 'committees',
-      type: 'array',
-      fields: [
-        { name: 'committee-name', type: 'text', required: true },
-        {
-          type: 'row',
-          fields: [
-            {
-              name: 'description',
-              type: 'textarea',
-              required: true,
-              admin: {
-                rows: 5,
-              },
-            },
-            {
-              name: 'requirements',
-              type: 'textarea',
-              required: false,
-              admin: {
-                rows: 5,
-              },
-            },
-          ],
-        },
-        {
-          name: 'position',
-          type: 'array',
+          label: 'Unit',
           fields: [
             {
               type: 'row',
               fields: [
-                { name: 'position-name', type: 'text', required: true },
+                { name: 'unit-name', type: 'text', required: true },
                 {
-                  name: 'status',
-                  type: 'select',
+                  name: 'slug',
+                  type: 'text',
                   required: true,
-                  options: [
-                    { label: 'open', value: 'open' },
-                    { label: 'closed', value: 'closed' },
+                },
+                {
+                  name: 'cluster',
+                  type: 'relationship',
+                  relationTo: 'sgar-clusters',
+                },
+              ],
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'description',
+                  type: 'textarea',
+                  required: true,
+                  admin: {
+                    rows: 5,
+                  },
+                },
+                {
+                  name: 'form-link',
+                  type: 'text',
+                  required: true,
+                },
+              ],
+            },
+
+            // PUBS
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'logo',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                },
+                {
+                  name: 'main-pub',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                },
+                {
+                  name: 'org-chart',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                },
+              ],
+            },
+
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'application-process',
+                  type: 'textarea',
+                  admin: { rows: 8 },
+                  required: false,
+                },
+                {
+                  name: 'application-timeline',
+                  type: 'textarea',
+                  admin: { rows: 8 },
+                  required: false,
+                },
+              ],
+            },
+          ],
+        },
+
+        {
+          label: 'Executive Board',
+          fields: [
+            // EXECUTIVE BOARD
+            {
+              name: 'executive-board',
+              type: 'array',
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'full-name',
+                      type: 'text',
+                      required: true,
+                    },
+                    {
+                      name: 'position',
+                      type: 'text',
+                      required: true,
+                    },
+                  ],
+                },
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'email',
+                      type: 'text',
+                      required: true,
+                    },
+                    {
+                      name: 'telegram-username',
+                      type: 'text',
+                      required: false,
+                    },
+                  ],
+                },
+                {
+                  name: 'photo',
+                  type: 'upload',
+                  relationTo: 'media',
+                  required: false,
+                },
+              ],
+            },
+          ],
+        },
+
+        {
+          label: 'Committees',
+          fields: [
+            // COMMITTEES
+            {
+              name: 'committees',
+              type: 'array',
+              fields: [
+                { name: 'committee-name', type: 'text', required: true },
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'description',
+                      type: 'textarea',
+                      required: true,
+                      admin: {
+                        rows: 5,
+                      },
+                    },
+                    {
+                      name: 'requirements',
+                      type: 'textarea',
+                      required: false,
+                      admin: {
+                        rows: 5,
+                      },
+                    },
+                  ],
+                },
+                {
+                  name: 'position',
+                  type: 'array',
+                  fields: [
+                    {
+                      type: 'row',
+                      fields: [
+                        { name: 'position-name', type: 'text', required: true },
+                        {
+                          name: 'status',
+                          type: 'select',
+                          required: true,
+                          options: [
+                            { label: 'open', value: 'open' },
+                            { label: 'closed', value: 'closed' },
+                          ],
+                        },
+                      ],
+                    },
                   ],
                 },
               ],

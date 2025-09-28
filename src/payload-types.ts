@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     posts: Post;
     'sgar-units': SgarUnit;
+    'sgar-clusters': SgarCluster;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -81,6 +82,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     'sgar-units': SgarUnitsSelect<false> | SgarUnitsSelect<true>;
+    'sgar-clusters': SgarClustersSelect<false> | SgarClustersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -200,10 +202,12 @@ export interface SgarUnit {
   id: number;
   'unit-name': string;
   slug: string;
+  cluster?: (number | null) | SgarCluster;
   description: string;
   'form-link': string;
   logo?: (number | null) | Media;
   'main-pub'?: (number | null) | Media;
+  'org-chart'?: (number | null) | Media;
   'application-process'?: string | null;
   'application-timeline'?: string | null;
   'executive-board'?:
@@ -236,6 +240,16 @@ export interface SgarUnit {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sgar-clusters".
+ */
+export interface SgarCluster {
+  id: number;
+  'cluster-name': string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -256,6 +270,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'sgar-units';
         value: number | SgarUnit;
+      } | null)
+    | ({
+        relationTo: 'sgar-clusters';
+        value: number | SgarCluster;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -363,10 +381,12 @@ export interface PostsSelect<T extends boolean = true> {
 export interface SgarUnitsSelect<T extends boolean = true> {
   'unit-name'?: T;
   slug?: T;
+  cluster?: T;
   description?: T;
   'form-link'?: T;
   logo?: T;
   'main-pub'?: T;
+  'org-chart'?: T;
   'application-process'?: T;
   'application-timeline'?: T;
   'executive-board'?:
@@ -394,6 +414,15 @@ export interface SgarUnitsSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sgar-clusters_select".
+ */
+export interface SgarClustersSelect<T extends boolean = true> {
+  'cluster-name'?: T;
   updatedAt?: T;
   createdAt?: T;
 }

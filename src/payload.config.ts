@@ -12,6 +12,7 @@ import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
 import { SGAR_Units } from './collections/sgar/SGAR-Units'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { SGAR_Clusters } from './collections/sgar/SGAR-Cluster'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -40,7 +41,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Posts, SGAR_Units],
+  collections: [Users, Media, Posts, SGAR_Units, SGAR_Clusters],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
