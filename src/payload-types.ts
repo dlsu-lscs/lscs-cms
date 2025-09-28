@@ -205,6 +205,7 @@ export interface SgarUnit {
   logo?: (number | null) | Media;
   'main-pub'?: (number | null) | Media;
   'application-process'?: string | null;
+  'application-timeline'?: string | null;
   'executive-board'?:
     | {
         'full-name': string;
@@ -367,6 +368,7 @@ export interface SgarUnitsSelect<T extends boolean = true> {
   logo?: T;
   'main-pub'?: T;
   'application-process'?: T;
+  'application-timeline'?: T;
   'executive-board'?:
     | T
     | {

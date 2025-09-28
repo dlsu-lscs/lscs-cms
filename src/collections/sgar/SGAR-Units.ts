@@ -67,11 +67,18 @@ export const SGAR_Units: CollectionConfig = {
         },
       ],
     },
+
     {
-      name: 'application-process',
-      type: 'textarea',
-      admin: { rows: 8 },
-      required: false,
+      type: 'row',
+      fields: [
+        {
+          name: 'application-process',
+          type: 'textarea',
+          admin: { rows: 8 },
+          required: false,
+        },
+        { name: 'application-timeline', type: 'textarea', admin: { rows: 8 }, required: false },
+      ],
     },
 
     // EXECUTIVE BOARD
