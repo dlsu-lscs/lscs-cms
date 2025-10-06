@@ -20,6 +20,7 @@ import { default as default_d500ae2ad98a0a33d640ae0ac1a3417c } from '@/component
 import { default as default_b80a86fce1072afc84cd6a430a965697 } from '@/components/admin/AdminLogo'
 import { default as default_e6e0059b420888d6e768fc42ff241506 } from '@/components/admin/GoogleLogin'
 import { default as default_b2be564d3762b8a95d04cc20a0257f9c } from '@/components/admin/UnauthorizedBanner'
+import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -43,5 +44,6 @@ export const importMap = {
   "@/components/admin/AdminIcon#default": default_d500ae2ad98a0a33d640ae0ac1a3417c,
   "@/components/admin/AdminLogo#default": default_b80a86fce1072afc84cd6a430a965697,
   "@/components/admin/GoogleLogin#default": default_e6e0059b420888d6e768fc42ff241506,
-  "@/components/admin/UnauthorizedBanner#default": default_b2be564d3762b8a95d04cc20a0257f9c
+  "@/components/admin/UnauthorizedBanner#default": default_b2be564d3762b8a95d04cc20a0257f9c,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24
 }
