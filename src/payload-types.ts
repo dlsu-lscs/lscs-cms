@@ -228,9 +228,6 @@ export interface LscsArticle {
   id: number;
   title: string;
   subtitle: string;
-  category: number | LscsArticleCategory;
-  author: number | LscsArticleAuthor;
-  tags?: string[] | null;
   featuredImage?: (number | null) | Media;
   content: {
     root: {
@@ -248,6 +245,11 @@ export interface LscsArticle {
     [k: string]: unknown;
   };
   'md-content'?: string | null;
+  author: number | LscsArticleAuthor;
+  category: number | LscsArticleCategory;
+  tags?: string[] | null;
+  slug: string;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -425,12 +427,14 @@ export interface LscsArticleCategorySelect<T extends boolean = true> {
 export interface LscsArticlesSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
-  category?: T;
-  author?: T;
-  tags?: T;
   featuredImage?: T;
   content?: T;
   'md-content'?: T;
+  author?: T;
+  category?: T;
+  tags?: T;
+  slug?: T;
+  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
