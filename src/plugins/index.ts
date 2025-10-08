@@ -8,8 +8,15 @@ import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { GenerateTitle } from '@payloadcms/plugin-seo/types'
 
-const generateTitle: GenerateTitle = ({ doc }) => {
-  return doc.title ? `${doc.title} | La Salle Computer Society Articles` : 'La Salle Computer Society Articles'
+const generateTitle: GenerateTitle = ({ doc, ...args }) => {
+  console.log({ doc, args })
+  const collection = args.collectionConfig?.slug ?? ''
+  if (collection === "lscs-articles")
+    return doc.title
+      ? `${doc.title} | LSCS Articles`
+      : 'LSCS Articles'
+
+  return 'La Salle Computer Society'
 }
 
 export const plugins: Plugin[] = [
@@ -45,6 +52,5 @@ export const plugins: Plugin[] = [
       // ... Other S3 configuration
     },
   }),
-  seoPlugin({ generateTitle })
-
+  seoPlugin({ generateTitle }),
 ]
