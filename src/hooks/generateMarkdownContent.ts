@@ -85,6 +85,6 @@ updated: ${siblingData.updatedAt}
 
 export const cleanupMarkdownField: FieldHook = ({ siblingData }) => {
   // Ensure that the markdown field is not saved in the database
-  delete siblingData['md-content']
+  delete siblingData['md_content']
   return null
 }

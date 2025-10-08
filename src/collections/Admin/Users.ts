@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { isAdmin, isAdminOrSelf, isAdminField, isAuthenticated } from '@/services/access'
 import { deleteLinkedAccounts } from 'payload-auth-plugin/collection/hooks'
 import { AdminAccounts } from './Accounts'
-import { validateEmail } from '@/hooks/validateEmail'
+import { validateEmail } from '@/hooks/validateLscsEmail'
 
 export const AdminUsers: CollectionConfig = {
   slug: 'users',

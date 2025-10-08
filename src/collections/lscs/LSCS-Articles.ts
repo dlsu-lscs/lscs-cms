@@ -74,7 +74,7 @@ export const LSCS_Articles: CollectionConfig = {
       required: true,
     },
     {
-      name: 'md-content',
+      name: 'mdContent',
       type: 'textarea',
       admin: {
         hidden: true,

@@ -1,4 +1,4 @@
-import type { CollectionBeforeChangeHook, RichTextField } from 'payload'
+import type { CollectionBeforeChangeHook } from 'payload'
 import axios from 'axios'
 import { logAxiosError } from '@/lib/utils'
 

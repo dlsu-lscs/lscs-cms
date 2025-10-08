@@ -244,7 +244,7 @@ export interface LscsArticle {
     };
     [k: string]: unknown;
   };
-  'md-content'?: string | null;
+  mdContent?: string | null;
   author: number | LscsArticleAuthor;
   category: number | LscsArticleCategory;
   tags?: string[] | null;
@@ -429,7 +429,7 @@ export interface LscsArticlesSelect<T extends boolean = true> {
   subtitle?: T;
   featuredImage?: T;
   content?: T;
-  'md-content'?: T;
+  mdContent?: T;
   author?: T;
   category?: T;
   tags?: T;
