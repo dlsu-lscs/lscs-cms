@@ -245,6 +245,14 @@ export interface LscsArticle {
     [k: string]: unknown;
   };
   mdContent?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
   author: number | LscsArticleAuthor;
   category: number | LscsArticleCategory;
   tags?: string[] | null;
@@ -430,6 +438,13 @@ export interface LscsArticlesSelect<T extends boolean = true> {
   featuredImage?: T;
   content?: T;
   mdContent?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
   author?: T;
   category?: T;
   tags?: T;

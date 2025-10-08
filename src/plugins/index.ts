@@ -5,6 +5,12 @@ import { authPlugin } from 'payload-auth-plugin'
 import { GoogleAuthProvider } from 'payload-auth-plugin/providers'
 import { AdminAccounts } from '@/collections/Admin/Accounts'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
+import { seoPlugin } from '@payloadcms/plugin-seo'
+import { GenerateTitle } from '@payloadcms/plugin-seo/types'
+
+const generateTitle: GenerateTitle = ({ doc }) => {
+  return doc.title ? `${doc.title} | La Salle Computer Society Articles` : 'La Salle Computer Society Articles'
+}
 
 export const plugins: Plugin[] = [
   payloadCloudPlugin(),
@@ -39,5 +45,6 @@ export const plugins: Plugin[] = [
       // ... Other S3 configuration
     },
   }),
+  seoPlugin({ generateTitle })
 
 ]
