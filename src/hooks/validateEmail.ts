@@ -17,10 +17,10 @@ export const validateEmail: CollectionBeforeChangeHook = async ({ data }) => {
       { headers: { Authorization: `Bearer ${process.env.LSCS_CORE_API_TOKEN}` } },
     )
 
-    const committee = res.data.committee_name
-    if (committee === 'Publications') {
+    const committee = res.data.committee_id
+    if (committee === 'PUBLI' || committee === "CORE") {
       data.role = 'editor'
-    } else if (committee === 'Research and Development') {
+    } else if (committee === 'RND') {
       data.role = 'admin'
     }
 
