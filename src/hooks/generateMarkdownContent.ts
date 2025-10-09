@@ -2,6 +2,66 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 import type { FieldHook, RichTextField } from 'payload'
 import { convertLexicalToMarkdown, editorConfigFactory } from '@payloadcms/richtext-lexical'
 
+async function processLexicalUploads(
+  contentData: SerializedEditorState,
+  req: any,
+): Promise<SerializedEditorState> {
+  const processNode = async (node: any): Promise<any> => {
+    if (node.type === 'upload' && node.value) {
+      // Fetch the media document
+      try {
+        // node.value can be either the ID directly (number) or an object with id property
+        const mediaId = typeof node.value === 'object' ? node.value.id : node.value
+
+        const mediaDoc = await req.payload.findByID({
+          collection: 'media',
+          id: mediaId,
+        })
+
+        // Keep the URL encoded for now, will decode after markdown conversion
+        const imageUrl = mediaDoc.url || ''
+
+        // Replace the upload node with a paragraph containing the markdown image syntax
+        // This is necessary because root nodes can only contain block-level elements
+        return {
+          type: 'paragraph',
+          format: '',
+          indent: 0,
+          version: 1,
+          children: [
+            {
+              type: 'text',
+              text: `![${mediaDoc.alt || 'Image'}](${imageUrl})`,
+              format: 0,
+              version: 1,
+            },
+          ],
+          direction: null,
+          textFormat: 0,
+        }
+      } catch (error) {
+        console.error('Error fetching media for markdown conversion:', error)
+        return node
+      }
+    }
+
+    // Recursively process children
+    if (node.children && Array.isArray(node.children)) {
+      node.children = await Promise.all(node.children.map(processNode))
+    }
+
+    return node
+  }
+
+  // Create a deep copy of the entire content data to avoid mutating the original
+  const processed = JSON.parse(JSON.stringify(contentData))
+  if (processed.root?.children) {
+    processed.root.children = await Promise.all(processed.root.children.map(processNode))
+  }
+
+  return processed
+}
+
 export const generateMarkdownContent: FieldHook = async ({
   data,
   req,
@@ -14,13 +74,24 @@ export const generateMarkdownContent: FieldHook = async ({
     return ''
   }
 
+  const processedContent = await processLexicalUploads(contentData, req)
+
   const markdown = convertLexicalToMarkdown({
-    data: contentData,
+    data: processedContent,
     editorConfig: editorConfigFactory.fromField({
       field: siblingFields.find(
         (field) => 'name' in field && field.name === 'content',
       ) as RichTextField,
     }),
+  })
+
+  // Decode URLs in the markdown to prevent escaped underscores
+  // This replaces encoded URLs with decoded versions after markdown conversion
+  const decodedMarkdown = markdown.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, url) => {
+    // Decode the URL but keep the markdown syntax intact
+    const decodedUrl = decodeURIComponent(url)
+    const removeEsc = decodedUrl.replace(/\\_/g, '_')
+    return `![${alt}](${removeEsc})`
   })
 
   // Get populated relationship data
@@ -80,7 +151,7 @@ updated: ${siblingData.updatedAt}
 ---
 
 `
-  return meta + markdown
+  return meta + decodedMarkdown
 }
 
 export const cleanupMarkdownField: FieldHook = ({ siblingData }) => {
