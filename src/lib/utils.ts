@@ -9,13 +9,13 @@ export function cn(...inputs: ClassValue[]) {
 export function logAxiosError(error: unknown) {
   if (axios.isAxiosError(error)) {
     if (error.response) {
-      console.error(`[${error.response.status}]`, error.message)
+      // suppressed detailed axios response logging
     } else if (error.request) {
-      console.error('No response:', error.request)
+      // suppressed no-response logging
     } else {
-      console.error('Axios config error:', error.message)
+      // suppressed axios config error logging
     }
   } else {
-    console.error('Unknown error:', error)
+    // suppressed unknown error logging
   }
 }

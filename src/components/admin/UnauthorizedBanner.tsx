@@ -26,19 +26,17 @@ export default function UnauthorizedBanner() {
           },
         })
 
-        console.log('API Response status:', response.status)
-
         if (response.ok) {
           const userData = await response.json()
-          console.log('User data from API:', userData)
+          // console.log('User data from API:', userData)
           setUser(userData.user || userData)
         } else {
           const errorData = await response.text()
-          console.error('API Error:', response.status, errorData)
+          // console.error('API Error:', response.status, errorData)
           setError(`Failed to fetch user data: ${response.status}`)
         }
       } catch (err) {
-        console.error('Fetch error:', err)
+        // console.error('Fetch error:', err)
         setError('Network error occurred')
       } finally {
         setLoading(false)

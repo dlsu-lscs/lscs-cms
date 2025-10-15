@@ -2,6 +2,10 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 import type { FieldHook, RichTextField } from 'payload'
 import { convertLexicalToMarkdown, editorConfigFactory } from '@payloadcms/richtext-lexical'
 
+// TODO
+// Seperate the logic of custom meta data in the MD for LSCS articles to
+// its own hook
+
 async function processLexicalUploads(
   contentData: SerializedEditorState,
   req: any,
@@ -17,6 +21,9 @@ async function processLexicalUploads(
           collection: 'media',
           id: mediaId,
         })
+
+        // Minimal non-sensitive log: media id and filename
+        console.info('media fetched for markdown conversion', mediaDoc.id, mediaDoc.filename)
 
         // Keep the URL encoded for now, will decode after markdown conversion
         const imageUrl = mediaDoc.url || ''
@@ -40,7 +47,6 @@ async function processLexicalUploads(
           textFormat: 0,
         }
       } catch (error) {
-        console.error('Error fetching media for markdown conversion:', error)
         return node
       }
     }
@@ -136,7 +142,7 @@ export const generateMarkdownContent: FieldHook = async ({
       featuredImageUrl = img?.url || ''
     }
   } catch (error) {
-    console.error('Error populating relationship data:', error)
+    // swallow relationship population errors to avoid blocking save
   }
 
   const meta = `---

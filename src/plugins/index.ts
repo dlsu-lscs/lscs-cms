@@ -9,12 +9,9 @@ import { seoPlugin } from '@payloadcms/plugin-seo'
 import { GenerateTitle } from '@payloadcms/plugin-seo/types'
 
 const generateTitle: GenerateTitle = ({ doc, ...args }) => {
-  console.log({ doc, args })
   const collection = args.collectionConfig?.slug ?? ''
-  if (collection === "lscs-articles")
-    return doc.title
-      ? `${doc.title} | LSCS Articles`
-      : 'LSCS Articles'
+  if (collection === 'lscs-articles')
+    return doc.title ? `${doc.title} | LSCS Articles` : 'LSCS Articles'
 
   return 'La Salle Computer Society'
 }

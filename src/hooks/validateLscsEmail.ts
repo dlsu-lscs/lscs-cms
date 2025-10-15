@@ -6,7 +6,7 @@ export const validateEmail: CollectionBeforeChangeHook = async ({ data }) => {
   const email = data.email
 
   if (!email || typeof email !== 'string') {
-    console.warn('User does not have proper authorization, default role is "None"')
+    console.warn('validateEmail: missing or invalid email')
     return data
   }
 
@@ -18,7 +18,7 @@ export const validateEmail: CollectionBeforeChangeHook = async ({ data }) => {
     )
 
     const committee = res.data.committee_id
-    if (committee === 'PUBLI' || committee === "CORE") {
+    if (committee === 'PUBLI' || committee === 'CORE') {
       data.role = 'editor'
     } else if (committee === 'RND') {
       data.role = 'admin'

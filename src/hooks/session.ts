@@ -18,15 +18,15 @@ export const useSession = () => {
     const fetchSession = async () => {
       try {
         const { data, isSuccess, message } = await adminAuthClient.getClientSession()
-        console.log('Session response:', { isSuccess, message, data })
 
+        // Minimal log: indicate session fetch success (no user data)
+        console.info('session fetched', isSuccess ? 'success' : 'failure', message || '')
         setSession({
           data: data || {},
           message,
           isSuccess,
         })
       } catch (error) {
-        console.error('Error fetching session:', error)
         setSession({
           data: {},
           message: 'Failed to fetch session',
