@@ -1,28 +1,31 @@
-import { isAuthenticated, isAdminOrEditor, isAdminOrSelf, hasRole } from '@/services/access'
+import { isAdminOrEditor, isAdminOrSelf, hasRole } from '@/services/access'
 import type { CollectionConfig } from 'payload'
 import { generateMarkdownContent, cleanupMarkdownField } from '@/hooks/generateMarkdownContent'
-
+import { slugField } from '@/fields/slug'
 import {
   lexicalEditor,
-  defaultEditorFeatures,
-  UploadFeature,
-  RelationshipFeature,
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
-  BlocksFeature,
   HorizontalRuleFeature,
+  LinkFeature,
 } from '@payloadcms/richtext-lexical'
-import { Banner } from '@payloadcms/ui'
+import {
+  MetaDescriptionField,
+  MetaImageField,
+  MetaTitleField,
+  OverviewField,
+} from '@payloadcms/plugin-seo/fields'
 
 export const LSCS_Articles: CollectionConfig = {
   slug: 'lscs-articles',
   admin: {
     useAsTitle: 'title',
     group: 'LSCS',
+    defaultColumns: ["title", "author", "category", "createdAt", "updatedAt"],
   },
   access: {
-    // Only authenticated users can read user data
+    // Only authenticated users with roles can read user data
     read: hasRole,
     // Only admins can create new users
     create: isAdminOrEditor,
@@ -32,84 +35,111 @@ export const LSCS_Articles: CollectionConfig = {
     delete: isAdminOrSelf,
   },
   fields: [
+    { name: 'title', type: 'text', required: true },
+
     {
-      type: 'row',
-      fields: [
-        { name: 'title', type: 'text', required: true, admin: { width: '50%' } },
-        { name: 'subtitle', type: 'text', required: true, admin: { width: '50%' } },
-      ],
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Content',
+          fields: [
+            { name: 'subtitle', type: 'text', required: true, },
+
+            {
+              name: 'featuredImage',
+              type: 'relationship',
+              required: false,
+              relationTo: 'media',
+              admin: { placeholder: 'Select Images' },
+            },
+            {
+              name: 'content',
+              type: 'richText',
+              editor: lexicalEditor({
+                features: ({ rootFeatures }) => {
+                  // console.log(rootFeatures.map((f) => f.key))
+                  const filtered = rootFeatures.filter(
+                    (f) =>
+                      f.key !== 'relationship' &&
+                      // f.key !== 'upload' &&
+                      f.key !== 'align' &&
+                      f.key !== 'indent' &&
+                      f.key !== 'subscript' &&
+                      f.key !== 'superscript',
+                  )
+                  return [
+                    ...filtered,
+                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+                    FixedToolbarFeature({
+                      // remove alignment buttons
+                    }),
+                    LinkFeature(),
+                    InlineToolbarFeature(),
+                    HorizontalRuleFeature(),
+                  ]
+                },
+              }),
+              required: true,
+            },
+            {
+              name: 'mdContent',
+              type: 'textarea',
+              admin: {
+                hidden: true,
+              },
+              hooks: {
+                afterRead: [generateMarkdownContent],
+                beforeChange: [cleanupMarkdownField],
+              },
+            }
+          ]
+        },
+        {
+          fields: [
+            OverviewField({
+              titlePath: 'meta.title',
+              descriptionPath: 'meta.description',
+              imagePath: 'meta.image',
+            }),
+            MetaTitleField({
+              hasGenerateFn: true,
+            }),
+            MetaImageField({
+              relationTo: 'media',
+            }),
+
+            MetaDescriptionField({}),
+          ],
+          name: 'meta',
+          label: 'SEO',
+        }
+      ]
+    }
+    , {
+      name: 'author',
+      type: 'relationship',
+      required: true,
+      relationTo: 'lscs-article-authors',
+      admin: { position: 'sidebar' }
     },
     {
-      type: 'row',
-      fields: [
-        {
-          name: 'category',
-          type: 'relationship',
-          required: true,
-          relationTo: 'lscs-article-category',
-        },
-        {
-          name: 'author',
-          type: 'relationship',
-          required: true,
-          relationTo: 'lscs-article-authors',
-        },
-        {
-          name: 'tags',
-          type: 'text',
-          required: false,
-          hasMany: true,
-          admin: { placeholder: 'Enter tags' },
-        },
-      ],
+      name: 'category',
+      type: 'relationship',
+      required: true,
+      relationTo: 'lscs-article-category',
+      admin: { position: 'sidebar' }
     },
 
     {
-      name: 'featuredImage',
-      type: 'relationship',
+      name: 'tags',
+      type: 'text',
       required: false,
-      relationTo: 'media',
-      admin: { placeholder: 'Select Images' },
+      hasMany: true,
+      admin: { placeholder: 'Enter tags', position: 'sidebar' }
     },
-    {
-      name: 'content',
-      type: 'richText',
-      editor: lexicalEditor({
-        features: ({ rootFeatures }) => {
-          // console.log(rootFeatures.map((f) => f.key))
-          const filtered = rootFeatures.filter(
-            (f) =>
-              f.key !== 'relationship' &&
-              f.key !== 'upload' &&
-              f.key !== 'align' &&
-              f.key !== 'indent' &&
-              f.key !== 'subscript' &&
-              f.key !== 'superscript',
-          )
-          return [
-            ...filtered,
-            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-            FixedToolbarFeature({
-              // remove alignment buttons
-            }),
-            InlineToolbarFeature(),
-            HorizontalRuleFeature(),
-          ]
-        },
-      }),
-      required: true,
-    },
-    {
-      name: 'md-content',
-      type: 'textarea',
-      admin: {
-        hidden: true,
-      },
-      hooks: {
-        afterRead: [generateMarkdownContent],
-        beforeChange: [cleanupMarkdownField],
-      },
-    },
+
+    ...slugField('title', { slugOverrides: { required: true } })
+
   ],
   versions: { drafts: true },
 }

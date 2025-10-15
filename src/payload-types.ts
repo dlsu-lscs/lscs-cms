@@ -228,15 +228,12 @@ export interface LscsArticle {
   id: number;
   title: string;
   subtitle: string;
-  category: number | LscsArticleCategory;
-  author: number | LscsArticleAuthor;
-  tags?: string[] | null;
   featuredImage?: (number | null) | Media;
   content: {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -247,7 +244,20 @@ export interface LscsArticle {
     };
     [k: string]: unknown;
   };
-  'md-content'?: string | null;
+  mdContent?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  author: number | LscsArticleAuthor;
+  category: number | LscsArticleCategory;
+  tags?: string[] | null;
+  slug: string;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -425,12 +435,21 @@ export interface LscsArticleCategorySelect<T extends boolean = true> {
 export interface LscsArticlesSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
-  category?: T;
-  author?: T;
-  tags?: T;
   featuredImage?: T;
   content?: T;
-  'md-content'?: T;
+  mdContent?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  author?: T;
+  category?: T;
+  tags?: T;
+  slug?: T;
+  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

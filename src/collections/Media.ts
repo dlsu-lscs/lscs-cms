@@ -1,12 +1,12 @@
-import { hasRole, isAdminOrEditor, isAdminOrSelf, isAuthenticated } from '@/services/access'
+import { isAdminOrEditor, isAdminOrSelf } from '@/services/access'
 import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
 
   access: {
-    // Only authenticated users can read user data
-    read: hasRole,
+    // Anyone can read media
+    read: () => true,
     // Only admins can create new users
     create: isAdminOrEditor,
     // Users can update their own profile, admins can update anyone
