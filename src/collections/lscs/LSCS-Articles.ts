@@ -1,4 +1,4 @@
-import { isAdminOrEditor, isAdminOrSelf, hasRole } from '@/services/access'
+import { isAdminOrLscsEditor, isAdminOrLscsSelf, lscsHasRole } from '@/services/access'
 import type { CollectionConfig } from 'payload'
 import { generateMarkdownContent, cleanupMarkdownField } from '@/hooks/generateMarkdownContent'
 import { slugField } from '@/fields/slug'
@@ -22,17 +22,13 @@ export const LSCS_Articles: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'LSCS',
-    defaultColumns: ["title", "author", "category", "createdAt", "updatedAt"],
+    defaultColumns: ['title', 'author', 'category', 'createdAt', 'updatedAt'],
   },
   access: {
-    // Only authenticated users with roles can read user data
-    read: hasRole,
-    // Only admins can create new users
-    create: isAdminOrEditor,
-    // Users can update their own profile, admins can update anyone
-    update: isAdminOrSelf,
-    // Only admins can delete users
-    delete: isAdminOrSelf,
+    read: lscsHasRole,
+    create: isAdminOrLscsEditor,
+    update: isAdminOrLscsSelf,
+    delete: isAdminOrLscsSelf,
   },
   fields: [
     { name: 'title', type: 'text', required: true },
@@ -43,7 +39,7 @@ export const LSCS_Articles: CollectionConfig = {
         {
           label: 'Content',
           fields: [
-            { name: 'subtitle', type: 'text', required: true, },
+            { name: 'subtitle', type: 'text', required: true },
 
             {
               name: 'featuredImage',
@@ -91,8 +87,8 @@ export const LSCS_Articles: CollectionConfig = {
                 afterRead: [generateMarkdownContent],
                 beforeChange: [cleanupMarkdownField],
               },
-            }
-          ]
+            },
+          ],
         },
         {
           fields: [
@@ -112,22 +108,22 @@ export const LSCS_Articles: CollectionConfig = {
           ],
           name: 'meta',
           label: 'SEO',
-        }
-      ]
-    }
-    , {
+        },
+      ],
+    },
+    {
       name: 'author',
       type: 'relationship',
       required: true,
       relationTo: 'lscs-article-authors',
-      admin: { position: 'sidebar' }
+      admin: { position: 'sidebar' },
     },
     {
       name: 'category',
       type: 'relationship',
       required: true,
       relationTo: 'lscs-article-category',
-      admin: { position: 'sidebar' }
+      admin: { position: 'sidebar' },
     },
 
     {
@@ -135,11 +131,10 @@ export const LSCS_Articles: CollectionConfig = {
       type: 'text',
       required: false,
       hasMany: true,
-      admin: { placeholder: 'Enter tags', position: 'sidebar' }
+      admin: { placeholder: 'Enter tags', position: 'sidebar' },
     },
 
-    ...slugField('title', { slugOverrides: { required: true } })
-
+    ...slugField('title', { slugOverrides: { required: true } }),
   ],
   versions: { drafts: true },
 }

@@ -11,17 +11,28 @@ export const validateEmail: CollectionBeforeChangeHook = async ({ data }) => {
   }
 
   try {
+    const coreUrl = process.env.LSCS_CORE_API_URL
+    if (!coreUrl) {
+      console.warn('validateEmail: LSCS_CORE_API_URL is not configured')
+      return data
+    }
+
     const res = await axios.post(
-      `${process.env.LSCS_CORE_API_URL}/member` || '',
+      `${coreUrl}/member`,
       { email: email },
-      { headers: { Authorization: `Bearer ${process.env.LSCS_CORE_API_TOKEN}` } },
+      {
+        headers: { Authorization: `Bearer ${process.env.LSCS_CORE_API_TOKEN}` },
+      },
     )
 
     const committee = res.data.committee_id
     if (committee === 'PUBLI' || committee === 'CORE') {
       data.role = 'editor'
+      // mark user as belonging to the LSCS domain so access checks work immediately
+      data.domain = 'lscs'
     } else if (committee === 'RND') {
       data.role = 'admin'
+      data.domain = 'global'
     }
 
     return data

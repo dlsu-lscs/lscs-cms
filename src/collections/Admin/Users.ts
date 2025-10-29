@@ -53,6 +53,29 @@ export const AdminUsers: CollectionConfig = {
       },
     },
     {
+      name: 'domain',
+      type: 'select',
+      defaultValue: 'global',
+      options: [
+        {
+          label: 'LSCS',
+          value: 'lscs',
+        },
+        {
+          label: 'Global',
+          value: 'global',
+        },
+        {
+          label: 'Test',
+          value: 'test',
+        },
+      ],
+      required: true,
+      access: {
+        update: isAdminField,
+      },
+    },
+    {
       name: 'firstName',
       type: 'text',
     },

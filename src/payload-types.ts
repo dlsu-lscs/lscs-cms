@@ -128,6 +128,7 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   role: 'admin' | 'editor' | 'viewer' | 'none';
+  domain: 'lscs' | 'global' | 'test';
   firstName?: string | null;
   lastName?: string | null;
   updatedAt: string;
@@ -354,6 +355,7 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   role?: T;
+  domain?: T;
   firstName?: T;
   lastName?: T;
   updatedAt?: T;
