@@ -68,7 +68,7 @@ async function processLexicalUploads(
   return processed
 }
 
-export const generateMarkdownContent: FieldHook = async ({
+export const generateLscsMarkdownContent: FieldHook = async ({
   data,
   req,
   siblingData,
