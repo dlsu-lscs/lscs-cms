@@ -1,6 +1,6 @@
 import { isAdminOrLscsEditor, isAdminOrLscsSelf, lscsHasRole } from '@/services/access'
 import type { CollectionConfig } from 'payload'
-import { generateMarkdownContent, cleanupMarkdownField } from '@/hooks/generateMarkdownContent'
+import { generateLscsMarkdownContent, cleanupMarkdownField } from '@/hooks/generateMarkdownContent'
 import { slugField } from '@/fields/slug'
 import {
   lexicalEditor,
@@ -84,7 +84,7 @@ export const LSCS_Articles: CollectionConfig = {
                 hidden: true,
               },
               hooks: {
-                afterRead: [generateMarkdownContent],
+                afterRead: [generateLscsMarkdownContent],
                 beforeChange: [cleanupMarkdownField],
               },
             },
