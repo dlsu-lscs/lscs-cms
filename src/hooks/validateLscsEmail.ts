@@ -13,8 +13,9 @@ export const validateEmail: CollectionBeforeChangeHook = async ({ data }) => {
   try {
     const coreUrl = process.env.LSCS_CORE_API_URL
     if (!coreUrl) {
-      console.warn('validateEmail: LSCS_CORE_API_URL is not configured')
-      return data
+      // Fail fast: if the core API URL is not configured we cannot verify domain/role
+      // and should prevent creation to avoid unknown/incorrect user records.
+      throw new Error('validateEmail: LSCS_CORE_API_URL is not configured')
     }
 
     const res = await axios.post(
@@ -37,8 +38,9 @@ export const validateEmail: CollectionBeforeChangeHook = async ({ data }) => {
 
     return data
   } catch (err) {
+    // Log the original axios error for diagnostics, then rethrow to stop the create/update.
     logAxiosError(err)
+    // Rethrow a clear error for Payload to present to the caller.
+    throw new Error('Failed to verify email with LSCS Core API: ' + (err as Error).message)
   }
-
-  return data
 }
