@@ -65,10 +65,6 @@ export const AdminUsers: CollectionConfig = {
           label: 'Global',
           value: 'global',
         },
-        {
-          label: 'Test',
-          value: 'test',
-        },
       ],
       required: true,
       access: {

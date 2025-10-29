@@ -128,7 +128,7 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   role: 'admin' | 'editor' | 'viewer' | 'none';
-  domain: 'lscs' | 'global' | 'test';
+  domain: 'lscs' | 'global';
   firstName?: string | null;
   lastName?: string | null;
   updatedAt: string;

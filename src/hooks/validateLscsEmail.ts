@@ -38,9 +38,17 @@ export const validateEmail: CollectionBeforeChangeHook = async ({ data }) => {
 
     return data
   } catch (err) {
-    // Log the original axios error for diagnostics, then rethrow to stop the create/update.
+    // If the core API explicitly returns 404 (member not found), allow creation to proceed
+    // without setting role/domain. This prevents blocking signups for non-members.
+
+    // Log other axios errors for diagnostics, then rethrow to stop the create/update.
     logAxiosError(err)
     // Rethrow a clear error for Payload to present to the caller.
-    throw new Error('Failed to verify email with LSCS Core API: ' + (err as Error).message)
+    console.error(
+      'Failed to verify email with LSCS Core API: ' +
+        (err as Error).message +
+        '; proceeding without changes',
+    )
+    return data
   }
 }
