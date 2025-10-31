@@ -22,10 +22,10 @@ import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c08
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { SlugComponent as SlugComponent_92cc057d0a2abb4f6cf0307edf59f986 } from '@/fields/slug/SlugComponent'
-import { default as default_d500ae2ad98a0a33d640ae0ac1a3417c } from '@/components/admin/AdminIcon'
-import { default as default_b80a86fce1072afc84cd6a430a965697 } from '@/components/admin/AdminLogo'
-import { default as default_e6e0059b420888d6e768fc42ff241506 } from '@/components/admin/GoogleLogin'
-import { default as default_b2be564d3762b8a95d04cc20a0257f9c } from '@/components/admin/UnauthorizedBanner'
+import { default as default_640827e39063057817251ee6d099d476 } from '@/components/admin/atoms/AdminIcon'
+import { default as default_0f39166a8892c2ddfe6fa6df16ba42d0 } from '@/components/admin/atoms/AdminLogo'
+import { default as default_ccaeee152398e4c9cf52d664350391fb } from '@/components/admin/atoms/GoogleLogin'
+import { default as default_3596c1dd827a3abd7330b77c46043c3f } from '@/components/admin/molecules/UnauthorizedBanner'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 
 export const importMap = {
@@ -53,9 +53,9 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@/fields/slug/SlugComponent#SlugComponent": SlugComponent_92cc057d0a2abb4f6cf0307edf59f986,
-  "@/components/admin/AdminIcon#default": default_d500ae2ad98a0a33d640ae0ac1a3417c,
-  "@/components/admin/AdminLogo#default": default_b80a86fce1072afc84cd6a430a965697,
-  "@/components/admin/GoogleLogin#default": default_e6e0059b420888d6e768fc42ff241506,
-  "@/components/admin/UnauthorizedBanner#default": default_b2be564d3762b8a95d04cc20a0257f9c,
+  "@/components/admin/atoms/AdminIcon#default": default_640827e39063057817251ee6d099d476,
+  "@/components/admin/atoms/AdminLogo#default": default_0f39166a8892c2ddfe6fa6df16ba42d0,
+  "@/components/admin/atoms/GoogleLogin#default": default_ccaeee152398e4c9cf52d664350391fb,
+  "@/components/admin/molecules/UnauthorizedBanner#default": default_3596c1dd827a3abd7330b77c46043c3f,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24
 }

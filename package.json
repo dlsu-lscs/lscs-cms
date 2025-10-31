@@ -1,7 +1,7 @@
 {
   "name": "lscs-cms",
   "version": "1.0.0",
-  "description": "A blank template to get started with Payload 3.0",
+  "description": "A Headless Content Management System for La Salle Computer Society started with Payload 3.0",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -25,6 +25,7 @@
     "@payloadcms/richtext-lexical": "3.59.1",
     "@payloadcms/storage-s3": "^3.59.1",
     "@payloadcms/ui": "3.59.1",
+    "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@tailwindcss/postcss": "^4.1.14",
     "axios": "^1.12.2",
@@ -49,6 +50,7 @@
     "@eslint/eslintrc": "^3.3.1",
     "@playwright/test": "1.56.0",
     "@testing-library/react": "16.3.0",
+    "@types/css-modules": "^1.0.5",
     "@types/node": "^24.7.0",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.1",
