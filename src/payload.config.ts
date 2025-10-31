@@ -33,11 +33,11 @@ export default buildConfig({
     },
     components: {
       graphics: {
-        Logo: '@/components/admin/AdminLogo',
-        Icon: '@/components/admin/AdminIcon',
+        Logo: '@/components/admin/atoms/AdminLogo',
+        Icon: '@/components/admin/atoms/AdminIcon',
       },
-      afterLogin: ['@/components/admin/GoogleLogin'],
-      beforeDashboard: ['@/components/admin/UnauthorizedBanner'],
+      afterLogin: ['@/components/admin/atoms/GoogleLogin'],
+      beforeDashboard: ['@/components/admin/molecules/UnauthorizedBanner'],
     },
     importMap: {
       baseDir: path.resolve(dirname),

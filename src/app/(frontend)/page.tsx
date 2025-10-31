@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -65,6 +66,15 @@ export default async function HomePage() {
             width={16}
           />
         </picture>
+        {'   |  '}
+        <Link
+          href="/privacy-policy"
+          className="inline-block text-sm ml-1 hover:text-blue-600 hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Privacy Policy
+        </Link>
       </footer>
     </div>
   )
