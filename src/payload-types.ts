@@ -75,9 +75,6 @@ export interface Config {
     'lscs-article-authors': LscsArticleAuthor;
     'archerbytes-article-category': ArcherbytesArticleCategory;
     'archerbytes-articles': ArcherbytesArticle;
-    'archerbytes-comments': ArcherbytesComment;
-    'archerbytes-article-reactions': ArcherbytesArticleReaction;
-    'archerbytes-comment-reactions': ArcherbytesCommentReaction;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -92,9 +89,6 @@ export interface Config {
     'lscs-article-authors': LscsArticleAuthorsSelect<false> | LscsArticleAuthorsSelect<true>;
     'archerbytes-article-category': ArcherbytesArticleCategorySelect<false> | ArcherbytesArticleCategorySelect<true>;
     'archerbytes-articles': ArcherbytesArticlesSelect<false> | ArcherbytesArticlesSelect<true>;
-    'archerbytes-comments': ArcherbytesCommentsSelect<false> | ArcherbytesCommentsSelect<true>;
-    'archerbytes-article-reactions': ArcherbytesArticleReactionsSelect<false> | ArcherbytesArticleReactionsSelect<true>;
-    'archerbytes-comment-reactions': ArcherbytesCommentReactionsSelect<false> | ArcherbytesCommentReactionsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -345,46 +339,6 @@ export interface ArcherbytesArticle {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "archerbytes-comments".
- */
-export interface ArcherbytesComment {
-  id: number;
-  user: number | User;
-  article: number | ArcherbytesArticle;
-  /**
-   * Reply to another comment for threaded discussions
-   */
-  replyTo?: (number | null) | ArcherbytesComment;
-  content: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "archerbytes-article-reactions".
- */
-export interface ArcherbytesArticleReaction {
-  id: number;
-  user: number | User;
-  article: number | ArcherbytesArticle;
-  reactionType: 'like' | 'heart' | 'care' | 'haha' | 'wow' | 'sad' | 'angry';
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "archerbytes-comment-reactions".
- */
-export interface ArcherbytesCommentReaction {
-  id: number;
-  user: number | User;
-  comment: number | ArcherbytesComment;
-  reactionType: 'like' | 'heart' | 'care' | 'haha' | 'wow' | 'sad' | 'angry';
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -421,18 +375,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'archerbytes-articles';
         value: number | ArcherbytesArticle;
-      } | null)
-    | ({
-        relationTo: 'archerbytes-comments';
-        value: number | ArcherbytesComment;
-      } | null)
-    | ({
-        relationTo: 'archerbytes-article-reactions';
-        value: number | ArcherbytesArticleReaction;
-      } | null)
-    | ({
-        relationTo: 'archerbytes-comment-reactions';
-        value: number | ArcherbytesCommentReaction;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -634,40 +576,6 @@ export interface ArcherbytesArticlesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "archerbytes-comments_select".
- */
-export interface ArcherbytesCommentsSelect<T extends boolean = true> {
-  user?: T;
-  article?: T;
-  replyTo?: T;
-  content?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "archerbytes-article-reactions_select".
- */
-export interface ArcherbytesArticleReactionsSelect<T extends boolean = true> {
-  user?: T;
-  article?: T;
-  reactionType?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "archerbytes-comment-reactions_select".
- */
-export interface ArcherbytesCommentReactionsSelect<T extends boolean = true> {
-  user?: T;
-  comment?: T;
-  reactionType?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
