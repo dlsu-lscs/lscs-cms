@@ -11,6 +11,8 @@ import { Media } from './collections/Media'
 import { LSCS_Article_Category } from './collections/lscs/LSCS-Article-Category'
 import { LSCS_Articles } from './collections/lscs/LSCS-Articles'
 import { LSCS_Article_Authors } from './collections/lscs/LSCS-Article-Authors'
+import { Archerbytes_Article_Category } from './collections/archerbytes/Archerbytes-Article-Category'
+import { Archerbytes_Articles } from './collections/archerbytes/Archerbytes-Articles'
 import { plugins } from './plugins'
 import { AdminAccounts } from './collections/Admin/Accounts'
 
@@ -52,6 +54,8 @@ export default buildConfig({
     LSCS_Article_Category,
     LSCS_Articles,
     LSCS_Article_Authors,
+    Archerbytes_Article_Category,
+    Archerbytes_Articles,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

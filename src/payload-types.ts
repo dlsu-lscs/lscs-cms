@@ -73,6 +73,8 @@ export interface Config {
     'lscs-article-category': LscsArticleCategory;
     'lscs-articles': LscsArticle;
     'lscs-article-authors': LscsArticleAuthor;
+    'archerbytes-article-category': ArcherbytesArticleCategory;
+    'archerbytes-articles': ArcherbytesArticle;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -85,6 +87,8 @@ export interface Config {
     'lscs-article-category': LscsArticleCategorySelect<false> | LscsArticleCategorySelect<true>;
     'lscs-articles': LscsArticlesSelect<false> | LscsArticlesSelect<true>;
     'lscs-article-authors': LscsArticleAuthorsSelect<false> | LscsArticleAuthorsSelect<true>;
+    'archerbytes-article-category': ArcherbytesArticleCategorySelect<false> | ArcherbytesArticleCategorySelect<true>;
+    'archerbytes-articles': ArcherbytesArticlesSelect<false> | ArcherbytesArticlesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -278,6 +282,58 @@ export interface LscsArticleAuthor {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "archerbytes-article-category".
+ */
+export interface ArcherbytesArticleCategory {
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "archerbytes-articles".
+ */
+export interface ArcherbytesArticle {
+  id: number;
+  title: string;
+  subtitle: string;
+  featuredImage?: (number | null) | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  mdContent?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  author: number | LscsArticleAuthor;
+  category: number | ArcherbytesArticleCategory;
+  tags?: string[] | null;
+  slug: string;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -306,6 +362,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'lscs-article-authors';
         value: number | LscsArticleAuthor;
+      } | null)
+    | ({
+        relationTo: 'archerbytes-article-category';
+        value: number | ArcherbytesArticleCategory;
+      } | null)
+    | ({
+        relationTo: 'archerbytes-articles';
+        value: number | ArcherbytesArticle;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -467,6 +531,41 @@ export interface LscsArticleAuthorsSelect<T extends boolean = true> {
   user?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "archerbytes-article-category_select".
+ */
+export interface ArcherbytesArticleCategorySelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "archerbytes-articles_select".
+ */
+export interface ArcherbytesArticlesSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  featuredImage?: T;
+  content?: T;
+  mdContent?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  author?: T;
+  category?: T;
+  tags?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
