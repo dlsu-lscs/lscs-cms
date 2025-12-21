@@ -130,30 +130,6 @@ export const Archerbytes_Articles: CollectionConfig = {
       admin: { placeholder: 'Enter tags', position: 'sidebar' },
     },
 
-    {
-      name: 'status',
-      type: 'select',
-      required: true,
-      defaultValue: 'draft',
-      options: [
-        { label: 'Draft', value: 'draft' },
-        { label: 'Published', value: 'published' },
-      ],
-      admin: { position: 'sidebar' },
-    },
-
-    {
-      name: 'publishedAt',
-      type: 'date',
-      required: false,
-      admin: {
-        position: 'sidebar',
-        date: {
-          pickerAppearance: 'dayAndTime',
-        },
-      },
-    },
-
     ...slugField('title', { slugOverrides: { required: true } }),
   ],
   versions: { drafts: true },

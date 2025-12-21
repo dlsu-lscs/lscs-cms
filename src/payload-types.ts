@@ -287,9 +287,6 @@ export interface LscsArticleAuthor {
 export interface ArcherbytesArticleCategory {
   id: number;
   name: string;
-  description?: string | null;
-  slug: string;
-  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -329,8 +326,6 @@ export interface ArcherbytesArticle {
   author: number | LscsArticleAuthor;
   category: number | ArcherbytesArticleCategory;
   tags?: string[] | null;
-  status: 'draft' | 'published';
-  publishedAt?: string | null;
   slug: string;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -543,9 +538,6 @@ export interface LscsArticleAuthorsSelect<T extends boolean = true> {
  */
 export interface ArcherbytesArticleCategorySelect<T extends boolean = true> {
   name?: T;
-  description?: T;
-  slug?: T;
-  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -569,8 +561,6 @@ export interface ArcherbytesArticlesSelect<T extends boolean = true> {
   author?: T;
   category?: T;
   tags?: T;
-  status?: T;
-  publishedAt?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
