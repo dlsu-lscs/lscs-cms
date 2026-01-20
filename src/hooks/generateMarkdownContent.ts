@@ -146,14 +146,14 @@ export const generateLscsMarkdownContent: FieldHook = async ({
   }
 
   const meta = `---
-title: \'${siblingData.title}\'
-subtitle: \'${siblingData.subtitle}\'
-category: \'${categoryName}\'
-author: \'${authorName}\'
-tags: [${siblingData.tags ? siblingData.tags.map((tag: string) => `'${tag}'`).join(', ') : ''}]
-featuredImage: \'${featuredImageUrl}\'
-date: \'${siblingData.createdAt}\'
-updated: \'${siblingData.updatedAt}\'
+title: "${siblingData.title}"
+subtitle: "${siblingData.subtitle}"
+category: "${categoryName}"
+author: "${authorName}"
+tags: [${siblingData.tags ? siblingData.tags.map((tag: string) => `"${tag}"`).join(', ') : ''}]
+featuredImage: "${featuredImageUrl}"
+date: "${siblingData.createdAt}"
+updated: "${siblingData.updatedAt}"
 ---
 
 `
