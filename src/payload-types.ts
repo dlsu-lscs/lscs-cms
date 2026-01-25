@@ -75,8 +75,6 @@ export interface Config {
     'lscs-article-authors': LscsArticleAuthor;
     'archerbytes-article-category': ArcherbytesArticleCategory;
     'archerbytes-articles': ArcherbytesArticle;
-    'sgar-units': SgarUnit;
-    'sgar-clusters': SgarCluster;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -91,8 +89,6 @@ export interface Config {
     'lscs-article-authors': LscsArticleAuthorsSelect<false> | LscsArticleAuthorsSelect<true>;
     'archerbytes-article-category': ArcherbytesArticleCategorySelect<false> | ArcherbytesArticleCategorySelect<true>;
     'archerbytes-articles': ArcherbytesArticlesSelect<false> | ArcherbytesArticlesSelect<true>;
-    'sgar-units': SgarUnitsSelect<false> | SgarUnitsSelect<true>;
-    'sgar-clusters': SgarClustersSelect<false> | SgarClustersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -338,60 +334,6 @@ export interface ArcherbytesArticle {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar-units".
- */
-export interface SgarUnit {
-  id: number;
-  'unit-name': string;
-  slug: string;
-  cluster?: (number | null) | SgarCluster;
-  description: string;
-  'form-link': string;
-  logo?: (number | null) | Media;
-  'main-pub'?: (number | null) | Media;
-  'org-chart'?: (number | null) | Media;
-  'application-process'?: string | null;
-  'application-timeline'?: string | null;
-  'executive-board'?:
-    | {
-        'full-name': string;
-        position: string;
-        email: string;
-        'telegram-username'?: string | null;
-        photo?: (number | null) | Media;
-        id?: string | null;
-      }[]
-    | null;
-  committees?:
-    | {
-        'committee-name': string;
-        description: string;
-        requirements?: string | null;
-        position?:
-          | {
-              'position-name': string;
-              status: 'open' | 'closed';
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar-clusters".
- */
-export interface SgarCluster {
-  id: number;
-  'cluster-name': string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -428,14 +370,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'archerbytes-articles';
         value: number | ArcherbytesArticle;
-      } | null)
-    | ({
-        relationTo: 'sgar-units';
-        value: number | SgarUnit;
-      } | null)
-    | ({
-        relationTo: 'sgar-clusters';
-        value: number | SgarCluster;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -632,58 +566,6 @@ export interface ArcherbytesArticlesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar-units_select".
- */
-export interface SgarUnitsSelect<T extends boolean = true> {
-  'unit-name'?: T;
-  slug?: T;
-  cluster?: T;
-  description?: T;
-  'form-link'?: T;
-  logo?: T;
-  'main-pub'?: T;
-  'org-chart'?: T;
-  'application-process'?: T;
-  'application-timeline'?: T;
-  'executive-board'?:
-    | T
-    | {
-        'full-name'?: T;
-        position?: T;
-        email?: T;
-        'telegram-username'?: T;
-        photo?: T;
-        id?: T;
-      };
-  committees?:
-    | T
-    | {
-        'committee-name'?: T;
-        description?: T;
-        requirements?: T;
-        position?:
-          | T
-          | {
-              'position-name'?: T;
-              status?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sgar-clusters_select".
- */
-export interface SgarClustersSelect<T extends boolean = true> {
-  'cluster-name'?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
