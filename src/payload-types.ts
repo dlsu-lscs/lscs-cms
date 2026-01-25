@@ -59,611 +59,672 @@ export type SupportedTimezones =
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
   | 'Pacific/Auckland'
-  | 'Pacific/Fiji'
+  | 'Pacific/Fiji';
 
 export interface Config {
   auth: {
-    users: UserAuthOperations
-  }
-  blocks: {}
+    users: UserAuthOperations;
+  };
+  blocks: {};
   collections: {
-    users: User
-    accounts: Account
-    media: Media
-    'lscs-article-category': LscsArticleCategory
-    'lscs-articles': LscsArticle
-    'lscs-article-authors': LscsArticleAuthor
-    'archerbytes-article-category': ArcherbytesArticleCategory
-    'archerbytes-articles': ArcherbytesArticle
-    'payload-locked-documents': PayloadLockedDocument
-    'payload-preferences': PayloadPreference
-    'payload-migrations': PayloadMigration
-  }
-  collectionsJoins: {}
+    users: User;
+    accounts: Account;
+    media: Media;
+    'lscs-article-category': LscsArticleCategory;
+    'lscs-articles': LscsArticle;
+    'lscs-article-authors': LscsArticleAuthor;
+    'archerbytes-article-category': ArcherbytesArticleCategory;
+    'archerbytes-articles': ArcherbytesArticle;
+    'sgar-units': SgarUnit;
+    'sgar-clusters': SgarCluster;
+    'payload-locked-documents': PayloadLockedDocument;
+    'payload-preferences': PayloadPreference;
+    'payload-migrations': PayloadMigration;
+  };
+  collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>
-    accounts: AccountsSelect<false> | AccountsSelect<true>
-    media: MediaSelect<false> | MediaSelect<true>
-    'lscs-article-category': LscsArticleCategorySelect<false> | LscsArticleCategorySelect<true>
-    'lscs-articles': LscsArticlesSelect<false> | LscsArticlesSelect<true>
-    'lscs-article-authors': LscsArticleAuthorsSelect<false> | LscsArticleAuthorsSelect<true>
-    'archerbytes-article-category':
-      | ArcherbytesArticleCategorySelect<false>
-      | ArcherbytesArticleCategorySelect<true>
-    'archerbytes-articles': ArcherbytesArticlesSelect<false> | ArcherbytesArticlesSelect<true>
-    'payload-locked-documents':
-      | PayloadLockedDocumentsSelect<false>
-      | PayloadLockedDocumentsSelect<true>
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>
-  }
+    users: UsersSelect<false> | UsersSelect<true>;
+    accounts: AccountsSelect<false> | AccountsSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    'lscs-article-category': LscsArticleCategorySelect<false> | LscsArticleCategorySelect<true>;
+    'lscs-articles': LscsArticlesSelect<false> | LscsArticlesSelect<true>;
+    'lscs-article-authors': LscsArticleAuthorsSelect<false> | LscsArticleAuthorsSelect<true>;
+    'archerbytes-article-category': ArcherbytesArticleCategorySelect<false> | ArcherbytesArticleCategorySelect<true>;
+    'archerbytes-articles': ArcherbytesArticlesSelect<false> | ArcherbytesArticlesSelect<true>;
+    'sgar-units': SgarUnitsSelect<false> | SgarUnitsSelect<true>;
+    'sgar-clusters': SgarClustersSelect<false> | SgarClustersSelect<true>;
+    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+  };
   db: {
-    defaultIDType: number
-  }
-  globals: {}
-  globalsSelect: {}
-  locale: null
+    defaultIDType: number;
+  };
+  globals: {};
+  globalsSelect: {};
+  locale: null;
   user: User & {
-    collection: 'users'
-  }
+    collection: 'users';
+  };
   jobs: {
-    tasks: unknown
-    workflows: unknown
-  }
+    tasks: unknown;
+    workflows: unknown;
+  };
 }
 export interface UserAuthOperations {
   forgotPassword: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   login: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   registerFirstUser: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   unlock: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
-  id: number
-  role: 'admin' | 'editor' | 'viewer' | 'none'
-  domain: 'lscs' | 'global'
-  firstName?: string | null
-  lastName?: string | null
-  updatedAt: string
-  createdAt: string
-  enableAPIKey?: boolean | null
-  apiKey?: string | null
-  apiKeyIndex?: string | null
-  email: string
-  resetPasswordToken?: string | null
-  resetPasswordExpiration?: string | null
-  salt?: string | null
-  hash?: string | null
-  loginAttempts?: number | null
-  lockUntil?: string | null
+  id: number;
+  role: 'admin' | 'editor' | 'viewer' | 'none';
+  domain: 'lscs' | 'global';
+  firstName?: string | null;
+  lastName?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  enableAPIKey?: boolean | null;
+  apiKey?: string | null;
+  apiKeyIndex?: string | null;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
   sessions?:
     | {
-        id: string
-        createdAt?: string | null
-        expiresAt: string
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
       }[]
-    | null
-  password?: string | null
+    | null;
+  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "accounts".
  */
 export interface Account {
-  id: number
-  name?: string | null
-  picture?: string | null
-  user: number | User
-  issuerName: string
-  scope?: string | null
-  sub: string
-  access_token?: string | null
+  id: number;
+  name?: string | null;
+  picture?: string | null;
+  user: number | User;
+  issuerName: string;
+  scope?: string | null;
+  sub: string;
+  access_token?: string | null;
   passkey?: {
-    credentialId: string
+    credentialId: string;
     publicKey:
       | {
-          [k: string]: unknown
+          [k: string]: unknown;
         }
       | unknown[]
       | string
       | number
       | boolean
-      | null
-    counter: number
+      | null;
+    counter: number;
     transports:
       | {
-          [k: string]: unknown
+          [k: string]: unknown;
         }
       | unknown[]
       | string
       | number
       | boolean
-      | null
-    deviceType: string
-    backedUp: boolean
-  }
-  updatedAt: string
-  createdAt: string
+      | null;
+    deviceType: string;
+    backedUp: boolean;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
-  id: number
-  alt: string
-  updatedAt: string
-  createdAt: string
-  url?: string | null
-  thumbnailURL?: string | null
-  filename?: string | null
-  mimeType?: string | null
-  filesize?: number | null
-  width?: number | null
-  height?: number | null
-  focalX?: number | null
-  focalY?: number | null
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "lscs-article-category".
  */
 export interface LscsArticleCategory {
-  id: number
-  name: string
-  updatedAt: string
-  createdAt: string
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "lscs-articles".
  */
 export interface LscsArticle {
-  id: number
-  title: string
-  subtitle: string
-  featuredImage?: (number | null) | Media
+  id: number;
+  title: string;
+  subtitle: string;
+  featuredImage?: (number | null) | Media;
   content: {
     root: {
-      type: string
+      type: string;
       children: {
-        type: any
-        version: number
-        [k: string]: unknown
-      }[]
-      direction: ('ltr' | 'rtl') | null
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-      indent: number
-      version: number
-    }
-    [k: string]: unknown
-  }
-  mdContent?: string | null
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  mdContent?: string | null;
   meta?: {
-    title?: string | null
+    title?: string | null;
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (number | null) | Media
-    description?: string | null
-  }
-  author: number | LscsArticleAuthor
-  category: number | LscsArticleCategory
-  tags?: string[] | null
-  slug: string
-  slugLock?: boolean | null
-  updatedAt: string
-  createdAt: string
-  _status?: ('draft' | 'published') | null
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  author: number | LscsArticleAuthor;
+  category: number | LscsArticleCategory;
+  tags?: string[] | null;
+  slug: string;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "lscs-article-authors".
  */
 export interface LscsArticleAuthor {
-  id: number
-  name: string
-  bio?: string | null
-  avatar?: (number | null) | Media
-  user?: (number | null) | User
-  updatedAt: string
-  createdAt: string
+  id: number;
+  name: string;
+  bio?: string | null;
+  avatar?: (number | null) | Media;
+  user?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "archerbytes-article-category".
  */
 export interface ArcherbytesArticleCategory {
-  id: number
-  name: string
-  updatedAt: string
-  createdAt: string
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "archerbytes-articles".
  */
 export interface ArcherbytesArticle {
-  id: number
-  title: string
-  subtitle: string
-  featuredImage?: (number | null) | Media
+  id: number;
+  title: string;
+  subtitle: string;
+  featuredImage?: (number | null) | Media;
   content: {
     root: {
-      type: string
+      type: string;
       children: {
-        type: any
-        version: number
-        [k: string]: unknown
-      }[]
-      direction: ('ltr' | 'rtl') | null
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-      indent: number
-      version: number
-    }
-    [k: string]: unknown
-  }
-  mdContent?: string | null
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  mdContent?: string | null;
   meta?: {
-    title?: string | null
+    title?: string | null;
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (number | null) | Media
-    description?: string | null
-  }
-  author: number | LscsArticleAuthor
-  category: number | ArcherbytesArticleCategory
-  tags?: string[] | null
-  slug: string
-  slugLock?: boolean | null
-  updatedAt: string
-  createdAt: string
-  _status?: ('draft' | 'published') | null
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  author: number | LscsArticleAuthor;
+  category: number | ArcherbytesArticleCategory;
+  tags?: string[] | null;
+  slug: string;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "sgar-units".
  */
 export interface SgarUnit {
-  id: number
-  'unit-name': string
-  slug: string
-  cluster?: (number | null) | SgarCluster
-  description: string
-  'form-link': string
-  logo?: (number | null) | Media
-  'main-pub'?: (number | null) | Media
-  'org-chart'?: (number | null) | Media
-  'application-process'?: string | null
-  'application-timeline'?: string | null
+  id: number;
+  'unit-name': string;
+  slug: string;
+  cluster?: (number | null) | SgarCluster;
+  description: string;
+  'form-link': string;
+  logo?: (number | null) | Media;
+  'main-pub'?: (number | null) | Media;
+  'org-chart'?: (number | null) | Media;
+  'application-process'?: string | null;
+  'application-timeline'?: string | null;
   'executive-board'?:
     | {
-        'full-name': string
-        position: string
-        email: string
-        'telegram-username'?: string | null
-        photo?: (number | null) | Media
-        id?: string | null
+        'full-name': string;
+        position: string;
+        email: string;
+        'telegram-username'?: string | null;
+        photo?: (number | null) | Media;
+        id?: string | null;
       }[]
-    | null
+    | null;
   committees?:
     | {
-        'committee-name': string
-        description: string
-        requirements?: string | null
+        'committee-name': string;
+        description: string;
+        requirements?: string | null;
         position?:
           | {
-              'position-name': string
-              status: 'open' | 'closed'
-              id?: string | null
+              'position-name': string;
+              status: 'open' | 'closed';
+              id?: string | null;
             }[]
-          | null
-        id?: string | null
+          | null;
+        id?: string | null;
       }[]
-    | null
-  updatedAt: string
-  createdAt: string
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "sgar-clusters".
  */
 export interface SgarCluster {
-  id: number
-  'cluster-name': string
-  updatedAt: string
-  createdAt: string
+  id: number;
+  'cluster-name': string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number
+  id: number;
   document?:
     | ({
-        relationTo: 'users'
-        value: number | User
+        relationTo: 'users';
+        value: number | User;
       } | null)
     | ({
-        relationTo: 'accounts'
-        value: number | Account
+        relationTo: 'accounts';
+        value: number | Account;
       } | null)
     | ({
-        relationTo: 'media'
-        value: number | Media
+        relationTo: 'media';
+        value: number | Media;
       } | null)
     | ({
-        relationTo: 'lscs-article-category'
-        value: number | LscsArticleCategory
+        relationTo: 'lscs-article-category';
+        value: number | LscsArticleCategory;
       } | null)
     | ({
-        relationTo: 'lscs-articles'
-        value: number | LscsArticle
+        relationTo: 'lscs-articles';
+        value: number | LscsArticle;
       } | null)
     | ({
-        relationTo: 'lscs-article-authors'
-        value: number | LscsArticleAuthor
+        relationTo: 'lscs-article-authors';
+        value: number | LscsArticleAuthor;
       } | null)
     | ({
-        relationTo: 'archerbytes-article-category'
-        value: number | ArcherbytesArticleCategory
+        relationTo: 'archerbytes-article-category';
+        value: number | ArcherbytesArticleCategory;
       } | null)
     | ({
-        relationTo: 'archerbytes-articles'
-        value: number | ArcherbytesArticle
+        relationTo: 'archerbytes-articles';
+        value: number | ArcherbytesArticle;
       } | null)
-  globalSlug?: string | null
+    | ({
+        relationTo: 'sgar-units';
+        value: number | SgarUnit;
+      } | null)
+    | ({
+        relationTo: 'sgar-clusters';
+        value: number | SgarCluster;
+      } | null);
+  globalSlug?: string | null;
   user: {
-    relationTo: 'users'
-    value: number | User
-  }
-  updatedAt: string
-  createdAt: string
+    relationTo: 'users';
+    value: number | User;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number
+  id: number;
   user: {
-    relationTo: 'users'
-    value: number | User
-  }
-  key?: string | null
+    relationTo: 'users';
+    value: number | User;
+  };
+  key?: string | null;
   value?:
     | {
-        [k: string]: unknown
+        [k: string]: unknown;
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null
-  updatedAt: string
-  createdAt: string
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number
-  name?: string | null
-  batch?: number | null
-  updatedAt: string
-  createdAt: string
+  id: number;
+  name?: string | null;
+  batch?: number | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  role?: T
-  domain?: T
-  firstName?: T
-  lastName?: T
-  updatedAt?: T
-  createdAt?: T
-  enableAPIKey?: T
-  apiKey?: T
-  apiKeyIndex?: T
-  email?: T
-  resetPasswordToken?: T
-  resetPasswordExpiration?: T
-  salt?: T
-  hash?: T
-  loginAttempts?: T
-  lockUntil?: T
+  role?: T;
+  domain?: T;
+  firstName?: T;
+  lastName?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  enableAPIKey?: T;
+  apiKey?: T;
+  apiKeyIndex?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
   sessions?:
     | T
     | {
-        id?: T
-        createdAt?: T
-        expiresAt?: T
-      }
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "accounts_select".
  */
 export interface AccountsSelect<T extends boolean = true> {
-  name?: T
-  picture?: T
-  user?: T
-  issuerName?: T
-  scope?: T
-  sub?: T
-  access_token?: T
+  name?: T;
+  picture?: T;
+  user?: T;
+  issuerName?: T;
+  scope?: T;
+  sub?: T;
+  access_token?: T;
   passkey?:
     | T
     | {
-        credentialId?: T
-        publicKey?: T
-        counter?: T
-        transports?: T
-        deviceType?: T
-        backedUp?: T
-      }
-  updatedAt?: T
-  createdAt?: T
+        credentialId?: T;
+        publicKey?: T;
+        counter?: T;
+        transports?: T;
+        deviceType?: T;
+        backedUp?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
-  alt?: T
-  updatedAt?: T
-  createdAt?: T
-  url?: T
-  thumbnailURL?: T
-  filename?: T
-  mimeType?: T
-  filesize?: T
-  width?: T
-  height?: T
-  focalX?: T
-  focalY?: T
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "lscs-article-category_select".
  */
 export interface LscsArticleCategorySelect<T extends boolean = true> {
-  name?: T
-  updatedAt?: T
-  createdAt?: T
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "lscs-articles_select".
  */
 export interface LscsArticlesSelect<T extends boolean = true> {
-  title?: T
-  subtitle?: T
-  featuredImage?: T
-  content?: T
-  mdContent?: T
+  title?: T;
+  subtitle?: T;
+  featuredImage?: T;
+  content?: T;
+  mdContent?: T;
   meta?:
     | T
     | {
-        title?: T
-        image?: T
-        description?: T
-      }
-  author?: T
-  category?: T
-  tags?: T
-  slug?: T
-  slugLock?: T
-  updatedAt?: T
-  createdAt?: T
-  _status?: T
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  author?: T;
+  category?: T;
+  tags?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "lscs-article-authors_select".
  */
 export interface LscsArticleAuthorsSelect<T extends boolean = true> {
-  name?: T
-  bio?: T
-  avatar?: T
-  user?: T
-  updatedAt?: T
-  createdAt?: T
+  name?: T;
+  bio?: T;
+  avatar?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "archerbytes-article-category_select".
  */
 export interface ArcherbytesArticleCategorySelect<T extends boolean = true> {
-  name?: T
-  updatedAt?: T
-  createdAt?: T
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "archerbytes-articles_select".
  */
 export interface ArcherbytesArticlesSelect<T extends boolean = true> {
-  title?: T
-  subtitle?: T
-  featuredImage?: T
-  content?: T
-  mdContent?: T
+  title?: T;
+  subtitle?: T;
+  featuredImage?: T;
+  content?: T;
+  mdContent?: T;
   meta?:
     | T
     | {
-        title?: T
-        image?: T
-        description?: T
-      }
-  author?: T
-  category?: T
-  tags?: T
-  slug?: T
-  slugLock?: T
-  updatedAt?: T
-  createdAt?: T
-  _status?: T
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  author?: T;
+  category?: T;
+  tags?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sgar-units_select".
+ */
+export interface SgarUnitsSelect<T extends boolean = true> {
+  'unit-name'?: T;
+  slug?: T;
+  cluster?: T;
+  description?: T;
+  'form-link'?: T;
+  logo?: T;
+  'main-pub'?: T;
+  'org-chart'?: T;
+  'application-process'?: T;
+  'application-timeline'?: T;
+  'executive-board'?:
+    | T
+    | {
+        'full-name'?: T;
+        position?: T;
+        email?: T;
+        'telegram-username'?: T;
+        photo?: T;
+        id?: T;
+      };
+  committees?:
+    | T
+    | {
+        'committee-name'?: T;
+        description?: T;
+        requirements?: T;
+        position?:
+          | T
+          | {
+              'position-name'?: T;
+              status?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sgar-clusters_select".
+ */
+export interface SgarClustersSelect<T extends boolean = true> {
+  'cluster-name'?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
-  document?: T
-  globalSlug?: T
-  user?: T
-  updatedAt?: T
-  createdAt?: T
+  document?: T;
+  globalSlug?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences_select".
  */
 export interface PayloadPreferencesSelect<T extends boolean = true> {
-  user?: T
-  key?: T
-  value?: T
-  updatedAt?: T
-  createdAt?: T
+  user?: T;
+  key?: T;
+  value?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations_select".
  */
 export interface PayloadMigrationsSelect<T extends boolean = true> {
-  name?: T
-  batch?: T
-  updatedAt?: T
-  createdAt?: T
+  name?: T;
+  batch?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
-  [k: string]: unknown
+  [k: string]: unknown;
 }
+
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}
