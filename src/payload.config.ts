@@ -8,8 +8,6 @@ import sharp from 'sharp'
 
 import { AdminUsers } from './collections/Admin/Users'
 import { Media } from './collections/Media'
-import { SGAR_Units } from './collections/sgar/SGAR-Units'
-import { SGAR_Clusters } from './collections/sgar/SGAR-Cluster'
 import { LSCS_Article_Category } from './collections/lscs/LSCS-Article-Category'
 import { LSCS_Articles } from './collections/lscs/LSCS-Articles'
 import { LSCS_Article_Authors } from './collections/lscs/LSCS-Article-Authors'
@@ -58,8 +56,6 @@ export default buildConfig({
     LSCS_Article_Authors,
     Archerbytes_Article_Category,
     Archerbytes_Articles,
-    SGAR_Units,
-    SGAR_Clusters,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
