@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -18,21 +19,27 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background text-foreground flex-col">
       <div className="max-w-2xl mx-auto p-8 flex-1 flex justify-center flex-col">
-        <section className="flex items-center gap-4 mb-8 justify-center">
-          <picture>
-            <source srcSet="/lscs-logo.png" />
-            <Image alt="LSCS Logo" height={148} src="/lscs-logo.png" width={148} />
-          </picture>
-          <span>
-            <h1 className="sm:text-5xl text-2xl font-bold text-foreground">LSCS CMS</h1>
-            <h4 className="sm:text-sm text-xs font-extralight">40th La Salle Computer Society</h4>
-          </span>
+        <section className="flex flex-col items-center gap-4 mb-8 justify-center">
+          <div className="flex items-center gap-4 justify-center">
+            <picture>
+              <source srcSet="/lscs-logo.png" />
+              <Image alt="LSCS Logo" height={148} src="/lscs-logo.png" width={148} />
+            </picture>
+            <span>
+              <h1 className="sm:text-5xl text-2xl font-bold text-foreground">LSCS CMS</h1>
+              <h4 className="sm:text-sm text-xs font-extralight">40th La Salle Computer Society</h4>
+            </span>
+          </div>
+
+          <h3 className="text-lg text-center text-muted-foreground leading-relaxed">
+            A headless Content Management System managed by La Salle Computer Society.
+          </h3>
         </section>
 
-        <div className="mb-6">
+        <div className="mb-4">
           {!user && (
-            <h2 className="text-lg text-muted-foreground text-center">
-              Welcome to your new project.
+            <h2 className="text-sm text-muted-foreground text-center">
+              Sign in to access the admin panel.
             </h2>
           )}
           {user && (
@@ -53,6 +60,20 @@ export default async function HomePage() {
             </a>
           </Button>
         </div>
+
+        <section className="w-full max-w-xl mx-auto mt-6">
+          <details className="w-full">
+            <summary className="cursor-pointer text-sm text-muted-foreground text-center hover:text-foreground transition">
+              Learn more about LSCS CMS
+            </summary>
+            <div className="mt-4 p-4 rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm text-muted-foreground leading-relaxed">
+              LSCS CMS is a headless Content Management System designed for the La Salle Computer
+              Society (LSCS). It provides a secure platform for authorized members to manage and
+              publish articles, announcements, web assets, and content related to LSCS and external
+              activities and events.
+            </div>
+          </details>
+        </section>
       </div>
       <footer className="text-sm font-extralight py-2 flex items-center justify-center">
         Powered by Payload CMS
@@ -65,6 +86,15 @@ export default async function HomePage() {
             width={16}
           />
         </picture>
+        {'   |  '}
+        <Link
+          href="/privacy-policy"
+          className="inline-block text-sm ml-1 hover:text-blue-600 hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Privacy Policy
+        </Link>
       </footer>
     </div>
   )
