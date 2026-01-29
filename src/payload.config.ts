@@ -13,6 +13,9 @@ import { SGAR_Clusters } from './collections/sgar/SGAR-Cluster'
 import { LSCS_Article_Category } from './collections/lscs/LSCS-Article-Category'
 import { LSCS_Articles } from './collections/lscs/LSCS-Articles'
 import { LSCS_Article_Authors } from './collections/lscs/LSCS-Article-Authors'
+import { LSCS_Partners } from './collections/lscs/LSCS-Partners'
+import { LSCS_Awards } from './collections/lscs/LSCS-Awards'
+import { LSCS_Web_Assets } from './collections/lscs/LSCS-Web-Assets'
 import { Archerbytes_Article_Category } from './collections/archerbytes/Archerbytes-Article-Category'
 import { Archerbytes_Articles } from './collections/archerbytes/Archerbytes-Articles'
 import { plugins } from './plugins'
@@ -56,6 +59,9 @@ export default buildConfig({
     LSCS_Article_Category,
     LSCS_Articles,
     LSCS_Article_Authors,
+    LSCS_Partners,
+    LSCS_Awards,
+    LSCS_Web_Assets,
     Archerbytes_Article_Category,
     Archerbytes_Articles,
     SGAR_Units,

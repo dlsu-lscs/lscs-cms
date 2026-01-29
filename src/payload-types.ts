@@ -73,6 +73,9 @@ export interface Config {
     'lscs-article-category': LscsArticleCategory;
     'lscs-articles': LscsArticle;
     'lscs-article-authors': LscsArticleAuthor;
+    'lscs-partners': LscsPartner;
+    'lscs-awards': LscsAward;
+    'lscs-web-assets': LscsWebAsset;
     'archerbytes-article-category': ArcherbytesArticleCategory;
     'archerbytes-articles': ArcherbytesArticle;
     'sgar-units': SgarUnit;
@@ -89,6 +92,9 @@ export interface Config {
     'lscs-article-category': LscsArticleCategorySelect<false> | LscsArticleCategorySelect<true>;
     'lscs-articles': LscsArticlesSelect<false> | LscsArticlesSelect<true>;
     'lscs-article-authors': LscsArticleAuthorsSelect<false> | LscsArticleAuthorsSelect<true>;
+    'lscs-partners': LscsPartnersSelect<false> | LscsPartnersSelect<true>;
+    'lscs-awards': LscsAwardsSelect<false> | LscsAwardsSelect<true>;
+    'lscs-web-assets': LscsWebAssetsSelect<false> | LscsWebAssetsSelect<true>;
     'archerbytes-article-category': ArcherbytesArticleCategorySelect<false> | ArcherbytesArticleCategorySelect<true>;
     'archerbytes-articles': ArcherbytesArticlesSelect<false> | ArcherbytesArticlesSelect<true>;
     'sgar-units': SgarUnitsSelect<false> | SgarUnitsSelect<true>;
@@ -286,6 +292,60 @@ export interface LscsArticleAuthor {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lscs-partners".
+ */
+export interface LscsPartner {
+  id: number;
+  name: string;
+  image: number | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lscs-awards".
+ */
+export interface LscsAward {
+  id: number;
+  awardName: string;
+  year: number;
+  projectName: string;
+  rank: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lscs-web-assets".
+ */
+export interface LscsWebAsset {
+  id: number;
+  title: string;
+  hero?: {
+    image?: (number | null) | Media;
+  };
+  whoAreWe?: {
+    image?: (number | null) | Media;
+  };
+  whatWeDo?: {
+    image1?: (number | null) | Media;
+    image2?: (number | null) | Media;
+    image3?: (number | null) | Media;
+    image4?: (number | null) | Media;
+  };
+  about?: {
+    images?:
+      | {
+          image: number | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "archerbytes-article-category".
  */
 export interface ArcherbytesArticleCategory {
@@ -420,6 +480,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'lscs-article-authors';
         value: number | LscsArticleAuthor;
+      } | null)
+    | ({
+        relationTo: 'lscs-partners';
+        value: number | LscsPartner;
+      } | null)
+    | ({
+        relationTo: 'lscs-awards';
+        value: number | LscsAward;
+      } | null)
+    | ({
+        relationTo: 'lscs-web-assets';
+        value: number | LscsWebAsset;
       } | null)
     | ({
         relationTo: 'archerbytes-article-category';
@@ -595,6 +667,65 @@ export interface LscsArticleAuthorsSelect<T extends boolean = true> {
   bio?: T;
   avatar?: T;
   user?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lscs-partners_select".
+ */
+export interface LscsPartnersSelect<T extends boolean = true> {
+  name?: T;
+  image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lscs-awards_select".
+ */
+export interface LscsAwardsSelect<T extends boolean = true> {
+  awardName?: T;
+  year?: T;
+  projectName?: T;
+  rank?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lscs-web-assets_select".
+ */
+export interface LscsWebAssetsSelect<T extends boolean = true> {
+  title?: T;
+  hero?:
+    | T
+    | {
+        image?: T;
+      };
+  whoAreWe?:
+    | T
+    | {
+        image?: T;
+      };
+  whatWeDo?:
+    | T
+    | {
+        image1?: T;
+        image2?: T;
+        image3?: T;
+        image4?: T;
+      };
+  about?:
+    | T
+    | {
+        images?:
+          | T
+          | {
+              image?: T;
+              id?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
 }
