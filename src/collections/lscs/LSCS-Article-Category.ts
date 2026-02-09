@@ -1,4 +1,4 @@
-import { isAdminOrLscsEditor, isAdminOrLscsSelf, lscsHasRole } from '@/services/access'
+import { isAdminOrLscsEditor, lscsHasRole } from '@/services/access'
 import type { CollectionConfig } from 'payload'
 
 export const LSCS_Article_Category: CollectionConfig = {
@@ -10,8 +10,8 @@ export const LSCS_Article_Category: CollectionConfig = {
   access: {
     read: lscsHasRole,
     create: isAdminOrLscsEditor,
-    update: isAdminOrLscsSelf,
-    delete: isAdminOrLscsSelf,
+    update: isAdminOrLscsEditor,
+    delete: isAdminOrLscsEditor,
   },
   fields: [{ name: 'name', type: 'text', required: true }],
 }
