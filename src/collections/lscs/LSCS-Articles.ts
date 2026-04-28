@@ -2,6 +2,7 @@ import { isAdminOrLscsEditor, lscsHasRole } from '@/services/access'
 import type { CollectionConfig } from 'payload'
 import { generateLscsMarkdownContent, cleanupMarkdownField } from '@/hooks/generateMarkdownContent'
 import { slugField } from '@/fields/slug'
+import { afterChangeArticle, afterDeleteArticle } from '@/lib/webhook'
 import {
   lexicalEditor,
   FixedToolbarFeature,
@@ -137,4 +138,8 @@ export const LSCS_Articles: CollectionConfig = {
     ...slugField('title', { slugOverrides: { required: true } }),
   ],
   versions: { drafts: true },
+  hooks: {
+    afterChange: [afterChangeArticle],
+    afterDelete: [afterDeleteArticle],
+  },
 }

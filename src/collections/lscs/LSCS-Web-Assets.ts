@@ -1,5 +1,6 @@
 import { isAdminOrLscsEditor, lscsHasRole } from '@/services/access'
 import type { CollectionConfig } from 'payload'
+import { afterChangeWebAssets, afterDeleteWebAssets } from '@/lib/webhook'
 
 export const LSCS_Web_Assets: CollectionConfig = {
   slug: 'lscs-web-assets',
@@ -106,4 +107,8 @@ export const LSCS_Web_Assets: CollectionConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [afterChangeWebAssets],
+    afterDelete: [afterDeleteWebAssets],
+  },
 }
