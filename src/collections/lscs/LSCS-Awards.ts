@@ -1,5 +1,6 @@
 import { isAdminOrLscsEditor, lscsHasRole } from '@/services/access'
 import type { CollectionConfig } from 'payload'
+import { afterChangeAward, afterDeleteAward } from '@/lib/webhook'
 
 export const LSCS_Awards: CollectionConfig = {
   slug: 'lscs-awards',
@@ -38,4 +39,8 @@ export const LSCS_Awards: CollectionConfig = {
       required: true,
     },
   ],
+  hooks: {
+    afterChange: [afterChangeAward],
+    afterDelete: [afterDeleteAward],
+  },
 }

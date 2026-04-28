@@ -1,5 +1,6 @@
 import { isAdminOrLscsEditor, lscsHasRole } from '@/services/access'
 import type { CollectionConfig } from 'payload'
+import { afterChangePartner, afterDeletePartner } from '@/lib/webhook'
 
 export const LSCS_Partners: CollectionConfig = {
   slug: 'lscs-partners',
@@ -27,4 +28,8 @@ export const LSCS_Partners: CollectionConfig = {
       relationTo: 'media',
     },
   ],
+  hooks: {
+    afterChange: [afterChangePartner],
+    afterDelete: [afterDeletePartner],
+  },
 }
