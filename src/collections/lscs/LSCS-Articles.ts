@@ -64,7 +64,8 @@ export const LSCS_Articles: CollectionConfig = {
                       f.key !== 'subscript' &&
                       f.key !== 'superscript' &&
                       f.key !== 'checklist' &&
-                      f.key !== 'underline',
+                      f.key !== 'underline' &&
+                      f.key !== 'strikethrough',
                   )
                   return [
                     ...filtered,
