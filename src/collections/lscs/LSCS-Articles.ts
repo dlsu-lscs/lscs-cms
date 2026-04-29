@@ -62,7 +62,9 @@ export const LSCS_Articles: CollectionConfig = {
                       f.key !== 'align' &&
                       f.key !== 'indent' &&
                       f.key !== 'subscript' &&
-                      f.key !== 'superscript',
+                      f.key !== 'superscript' &&
+                      f.key !== 'checklist' &&
+                      f.key !== 'underline',
                   )
                   return [
                     ...filtered,
