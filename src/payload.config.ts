@@ -16,6 +16,7 @@ import { LSCS_Article_Authors } from './collections/lscs/LSCS-Article-Authors'
 import { LSCS_Partners } from './collections/lscs/LSCS-Partners'
 import { LSCS_Awards } from './collections/lscs/LSCS-Awards'
 import { LSCS_Web_Assets } from './collections/lscs/LSCS-Web-Assets'
+import { LSCS_Testimony } from './collections/lscs/LSCS-Testimony'
 import { Archerbytes_Article_Category } from './collections/archerbytes/Archerbytes-Article-Category'
 import { Archerbytes_Articles } from './collections/archerbytes/Archerbytes-Articles'
 import { plugins } from './plugins'
@@ -66,6 +67,7 @@ export default buildConfig({
     Archerbytes_Articles,
     SGAR_Units,
     SGAR_Clusters,
+    LSCS_Testimony,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

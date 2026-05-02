@@ -80,6 +80,7 @@ export interface Config {
     'archerbytes-articles': ArcherbytesArticle;
     'sgar-units': SgarUnit;
     'sgar-clusters': SgarCluster;
+    'lscs-testimony': LscsTestimony;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -100,6 +101,7 @@ export interface Config {
     'archerbytes-articles': ArcherbytesArticlesSelect<false> | ArcherbytesArticlesSelect<true>;
     'sgar-units': SgarUnitsSelect<false> | SgarUnitsSelect<true>;
     'sgar-clusters': SgarClustersSelect<false> | SgarClustersSelect<true>;
+    'lscs-testimony': LscsTestimonySelect<false> | LscsTestimonySelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -454,6 +456,21 @@ export interface SgarCluster {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lscs-testimony".
+ */
+export interface LscsTestimony {
+  id: number;
+  name: string;
+  testimony: string;
+  image: number | Media;
+  'id-number': string;
+  position?: string | null;
+  committee?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -527,6 +544,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'sgar-clusters';
         value: number | SgarCluster;
+      } | null)
+    | ({
+        relationTo: 'lscs-testimony';
+        value: number | LscsTestimony;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -832,6 +853,20 @@ export interface SgarUnitsSelect<T extends boolean = true> {
  */
 export interface SgarClustersSelect<T extends boolean = true> {
   'cluster-name'?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lscs-testimony_select".
+ */
+export interface LscsTestimonySelect<T extends boolean = true> {
+  name?: T;
+  testimony?: T;
+  image?: T;
+  'id-number'?: T;
+  position?: T;
+  committee?: T;
   updatedAt?: T;
   createdAt?: T;
 }
