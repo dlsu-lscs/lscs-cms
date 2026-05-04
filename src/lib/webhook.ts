@@ -13,6 +13,13 @@ type WebhookPayload =
       cms?: string
     }
   | {
+      event: 'category'
+      action: WebhookAction
+      categoryId: string
+      timestamp: string
+      cms?: string
+    }
+  | {
       event: 'partner'
       action: WebhookAction
       partnerId: string
@@ -36,6 +43,7 @@ type WebhookPayload =
 
 const WEBHOOK_EVENT_PATH: Record<WebhookPayload['event'], string> = {
   article: 'articles',
+  category: 'categories',
   partner: 'partners',
   award: 'awards',
   image: 'images',
@@ -224,6 +232,36 @@ export const afterDeleteAward: CollectionAfterDeleteHook = async ({ doc }) => {
     event: 'award',
     action: 'deleted',
     awardId,
+    timestamp: new Date().toISOString(),
+    cms: 'payload-cms',
+  })
+}
+
+export const afterChangeCategory: CollectionAfterChangeHook = async ({ doc, operation }) => {
+  const action: WebhookAction = operation === 'create' ? 'created' : 'updated'
+
+  const categoryId = coerceIdToString(doc?.id)
+  if (!categoryId) return doc
+
+  await sendWebhook({
+    event: 'category',
+    action,
+    categoryId,
+    timestamp: new Date().toISOString(),
+    cms: 'payload-cms',
+  })
+
+  return doc
+}
+
+export const afterDeleteCategory: CollectionAfterDeleteHook = async ({ doc }) => {
+  const categoryId = coerceIdToString(doc?.id)
+  if (!categoryId) return
+
+  await sendWebhook({
+    event: 'category',
+    action: 'deleted',
+    categoryId,
     timestamp: new Date().toISOString(),
     cms: 'payload-cms',
   })
