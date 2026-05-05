@@ -49,11 +49,16 @@ const WEBHOOK_EVENT_PATH: Record<WebhookPayload['event'], string> = {
   image: 'images',
 }
 
+const ARCHERBYTES_EVENTS = new Set<WebhookPayload['event']>(['article', 'category'])
+
 let warnedMissingWebhookConfig = false
 
 function resolveWebhookUrl(event: WebhookPayload['event']): string | undefined {
-  const baseUrl = process.env.WEBHOOK_BASE_URL
-  const fullUrl = process.env.WEBHOOK_URL
+  const isArcherbytesEvent = ARCHERBYTES_EVENTS.has(event)
+  const baseUrl = isArcherbytesEvent
+    ? process.env.ARCHERBYTES_WEBHOOK_BASE_URL
+    : process.env.WEBHOOK_BASE_URL
+  const fullUrl = isArcherbytesEvent ? process.env.ARCHERBYTES_WEBHOOK_URL : process.env.WEBHOOK_URL
   const legacyUrl = process.env.NEXT_PUBLIC_WEBHOOK_URL
 
   if (fullUrl) return fullUrl
@@ -98,7 +103,7 @@ async function sendWebhook(payload: WebhookPayload): Promise<void> {
     if (!warnedMissingWebhookConfig) {
       warnedMissingWebhookConfig = true
       console.warn(
-        'Webhook not configured. Set WEBHOOK_BASE_URL (recommended) or WEBHOOK_URL/NEXT_PUBLIC_WEBHOOK_URL, plus WEBHOOK_SECRET.',
+        'Webhook not configured. Set ARCHERBYTES_WEBHOOK_BASE_URL or WEBHOOK_BASE_URL (recommended), or ARCHERBYTES_WEBHOOK_URL/WEBHOOK_URL/NEXT_PUBLIC_WEBHOOK_URL, plus WEBHOOK_SECRET.',
       )
     }
     return
