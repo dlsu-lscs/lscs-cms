@@ -95,6 +95,14 @@ function getVerboseLoggingEnabled(): boolean {
 }
 
 async function sendWebhook(payload: WebhookPayload): Promise<void> {
+  const isArcherbytesEvent = ARCHERBYTES_EVENTS.has(payload.event)
+  if (isArcherbytesEvent && process.env.ARCHERBYTES_OUTBOUND_ENABLED !== 'true') {
+    if (getVerboseLoggingEnabled()) {
+      console.log(`Webhook for ${payload.event} skipped: ARCHERBYTES_OUTBOUND_ENABLED is not enabled`)
+    }
+    return
+  }
+
   const webhookUrl = resolveWebhookUrl(payload.event)
   const webhookSecret = process.env.WEBHOOK_SECRET
 
