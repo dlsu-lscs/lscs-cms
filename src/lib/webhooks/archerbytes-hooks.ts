@@ -5,7 +5,8 @@ type ArcherbytesWebhookAction = 'created' | 'updated' | 'deleted'
 interface ArcherbytesWebhookPayload {
   event: 'article' | 'category'
   action: ArcherbytesWebhookAction
-  id: string
+  articleId?: string
+  categoryId?: string
   timestamp: string
   cms: 'payload-cms'
 }
@@ -74,7 +75,7 @@ export const afterChangeArcherbytesArticle: CollectionAfterChangeHook = async ({
   await sendArcherbytesWebhook({
     event: 'article',
     action,
-    id: articleId,
+    articleId,
     timestamp: new Date().toISOString(),
     cms: 'payload-cms',
   })
@@ -90,7 +91,7 @@ export const afterDeleteArcherbytesArticle: CollectionAfterDeleteHook = async ({
   await sendArcherbytesWebhook({
     event: 'article',
     action: 'deleted',
-    id: articleId,
+    articleId,
     timestamp: new Date().toISOString(),
     cms: 'payload-cms',
   })
@@ -107,7 +108,7 @@ export const afterChangeArcherbytesCategory: CollectionAfterChangeHook = async (
   await sendArcherbytesWebhook({
     event: 'category',
     action,
-    id: categoryId,
+    categoryId,
     timestamp: new Date().toISOString(),
     cms: 'payload-cms',
   })
@@ -122,7 +123,7 @@ export const afterDeleteArcherbytesCategory: CollectionAfterDeleteHook = async (
   await sendArcherbytesWebhook({
     event: 'category',
     action: 'deleted',
-    id: categoryId,
+    categoryId,
     timestamp: new Date().toISOString(),
     cms: 'payload-cms',
   })
