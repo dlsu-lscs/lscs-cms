@@ -49,16 +49,11 @@ const WEBHOOK_EVENT_PATH: Record<WebhookPayload['event'], string> = {
   image: 'images',
 }
 
-const ARCHERBYTES_EVENTS = new Set<WebhookPayload['event']>(['article', 'category'])
-
 let warnedMissingWebhookConfig = false
 
 function resolveWebhookUrl(event: WebhookPayload['event']): string | undefined {
-  const isArcherbytesEvent = ARCHERBYTES_EVENTS.has(event)
-  const baseUrl = isArcherbytesEvent
-    ? process.env.ARCHERBYTES_WEBHOOK_BASE_URL
-    : process.env.WEBHOOK_BASE_URL
-  const fullUrl = isArcherbytesEvent ? process.env.ARCHERBYTES_WEBHOOK_URL : process.env.WEBHOOK_URL
+  const baseUrl = process.env.WEBHOOK_BASE_URL
+  const fullUrl = process.env.WEBHOOK_URL
   const legacyUrl = process.env.NEXT_PUBLIC_WEBHOOK_URL
 
   if (fullUrl) return fullUrl
@@ -95,23 +90,14 @@ function getVerboseLoggingEnabled(): boolean {
 }
 
 async function sendWebhook(payload: WebhookPayload): Promise<void> {
-  const isArcherbytesEvent = ARCHERBYTES_EVENTS.has(payload.event)
-  if (isArcherbytesEvent && process.env.ARCHERBYTES_OUTBOUND_ENABLED !== 'true') {
-    if (getVerboseLoggingEnabled()) {
-      console.log(`Webhook for ${payload.event} skipped: ARCHERBYTES_OUTBOUND_ENABLED is not enabled`)
-    }
-    return
-  }
-
   const webhookUrl = resolveWebhookUrl(payload.event)
   const webhookSecret = process.env.WEBHOOK_SECRET
 
-  // Skip webhook if not configured
   if (!webhookUrl || !webhookSecret) {
     if (!warnedMissingWebhookConfig) {
       warnedMissingWebhookConfig = true
       console.warn(
-        'Webhook not configured. Set ARCHERBYTES_WEBHOOK_BASE_URL or WEBHOOK_BASE_URL (recommended), or ARCHERBYTES_WEBHOOK_URL/WEBHOOK_URL/NEXT_PUBLIC_WEBHOOK_URL, plus WEBHOOK_SECRET.',
+        'LSCS webhook not configured. Set WEBHOOK_BASE_URL or WEBHOOK_URL (recommended), plus WEBHOOK_SECRET.',
       )
     }
     return
