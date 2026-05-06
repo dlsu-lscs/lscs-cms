@@ -1,6 +1,6 @@
 import { isAdminOrLscsEditor, isAdminOrLscsSelf, lscsHasRole } from '@/services/access'
 import type { CollectionConfig } from 'payload'
-import { afterChangeCategory, afterDeleteCategory } from '@/lib/webhook'
+import { afterChangeArcherbytesCategory, afterDeleteArcherbytesCategory } from '@/lib/webhooks/archerbytes-hooks'
 
 export const Archerbytes_Article_Category: CollectionConfig = {
   slug: 'archerbytes-article-category',
@@ -16,7 +16,7 @@ export const Archerbytes_Article_Category: CollectionConfig = {
   },
   fields: [{ name: 'name', type: 'text', required: true }],
   hooks: {
-    afterChange: [afterChangeCategory],
-    afterDelete: [afterDeleteCategory],
+    afterChange: [afterChangeArcherbytesCategory],
+    afterDelete: [afterDeleteArcherbytesCategory],
   },
 }
