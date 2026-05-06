@@ -37,13 +37,8 @@ async function sendArcherbytesWebhook(payload: ArcherbytesWebhookPayload): Promi
     return
   }
 
-  const url =
-    webhookUrl.includes('/api/webhooks') && !webhookUrl.endsWith(payload.event)
-      ? `${webhookUrl}/${payload.event}`
-      : webhookUrl
-
   try {
-    const response = await fetch(url, {
+    const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
