@@ -63,8 +63,7 @@ export const afterChangeArcherbytesArticle: CollectionAfterChangeHook = async ({
   operation,
 }) => {
   const action: ArcherbytesWebhookAction = operation === 'create' ? 'created' : 'updated'
-  const articleId =
-    typeof doc?.slug === 'string' && doc.slug.length > 0 ? doc.slug : coerceIdToString(doc?.id)
+  const articleId = coerceIdToString(doc?.id)
   if (!articleId) return doc
 
   await sendArcherbytesWebhook({
@@ -79,8 +78,7 @@ export const afterChangeArcherbytesArticle: CollectionAfterChangeHook = async ({
 }
 
 export const afterDeleteArcherbytesArticle: CollectionAfterDeleteHook = async ({ doc }) => {
-  const articleId =
-    typeof doc?.slug === 'string' && doc.slug.length > 0 ? doc.slug : coerceIdToString(doc?.id)
+  const articleId = coerceIdToString(doc?.id)
   if (!articleId) return
 
   await sendArcherbytesWebhook({
