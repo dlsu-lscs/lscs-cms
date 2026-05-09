@@ -1,4 +1,5 @@
 import { isAdminOrLscsEditor, isAdminOrLscsSelf, lscsHasRole } from '@/services/access'
+import { afterChangeArcherbytesArticle, afterDeleteArcherbytesArticle } from '@/lib/webhooks/archerbytes-hooks'
 import type { CollectionConfig } from 'payload'
 import { generateLscsMarkdownContent, cleanupMarkdownField } from '@/hooks/generateMarkdownContent'
 import { slugField } from '@/fields/slug'
@@ -133,4 +134,8 @@ export const Archerbytes_Articles: CollectionConfig = {
     ...slugField('title', { slugOverrides: { required: true } }),
   ],
   versions: { drafts: true },
+  hooks: {
+    afterChange: [afterChangeArcherbytesArticle],
+    afterDelete: [afterDeleteArcherbytesArticle],
+  },
 }
