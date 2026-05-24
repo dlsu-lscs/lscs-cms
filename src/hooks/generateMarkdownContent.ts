@@ -6,6 +6,10 @@ import { convertLexicalToMarkdown, editorConfigFactory } from '@payloadcms/richt
 // Seperate the logic of custom meta data in the MD for LSCS articles to
 // its own hook
 
+type MarkdownContentOptions = {
+  includeFrontmatter?: boolean
+}
+
 async function processLexicalUploads(
   contentData: SerializedEditorState,
   req: any,
@@ -68,12 +72,16 @@ async function processLexicalUploads(
   return processed
 }
 
-export const generateLscsMarkdownContent: FieldHook = async ({
-  data,
+async function buildMarkdownContent({
   req,
   siblingData,
   siblingFields,
-}) => {
+  includeFrontmatter = true,
+}: {
+  req: any
+  siblingData: Record<string, any>
+  siblingFields: any[]
+} & MarkdownContentOptions) {
   const contentData: SerializedEditorState = siblingData['content']
 
   if (!contentData) {
@@ -99,6 +107,10 @@ export const generateLscsMarkdownContent: FieldHook = async ({
     const removeEsc = decodedUrl.replace(/\\_/g, '_')
     return `![${alt}](${removeEsc})`
   })
+
+  if (!includeFrontmatter) {
+    return decodedMarkdown
+  }
 
   // Get populated relationship data
   let categoryName = ''
@@ -160,8 +172,34 @@ updated: "${siblingData.updatedAt}"
   return meta + decodedMarkdown
 }
 
+export const generateLscsMarkdownContent: FieldHook = async ({
+  req,
+  siblingData,
+  siblingFields,
+}) => {
+  return buildMarkdownContent({
+    req,
+    siblingData,
+    siblingFields,
+    includeFrontmatter: true,
+  })
+}
+
+export const generateArcherbytesMarkdownContent: FieldHook = async ({
+  req,
+  siblingData,
+  siblingFields,
+}) => {
+  return buildMarkdownContent({
+    req,
+    siblingData,
+    siblingFields,
+    includeFrontmatter: false,
+  })
+}
+
 export const cleanupMarkdownField: FieldHook = ({ siblingData }) => {
   // Ensure that the markdown field is not saved in the database
-  delete siblingData['md_content']
+  delete siblingData['mdContent']
   return null
 }

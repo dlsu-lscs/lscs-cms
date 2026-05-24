@@ -1,7 +1,13 @@
 import { isAdminOrLscsEditor, isAdminOrLscsSelf, lscsHasRole } from '@/services/access'
-import { afterChangeArcherbytesArticle, afterDeleteArcherbytesArticle } from '@/lib/webhooks/archerbytes-hooks'
+import {
+  afterChangeArcherbytesArticle,
+  afterDeleteArcherbytesArticle,
+} from '@/lib/webhooks/archerbytes-hooks'
 import type { CollectionConfig } from 'payload'
-import { generateLscsMarkdownContent, cleanupMarkdownField } from '@/hooks/generateMarkdownContent'
+import {
+  generateArcherbytesMarkdownContent,
+  cleanupMarkdownField,
+} from '@/hooks/generateMarkdownContent'
 import { slugField } from '@/fields/slug'
 import {
   lexicalEditor,
@@ -81,7 +87,7 @@ export const Archerbytes_Articles: CollectionConfig = {
                 hidden: true,
               },
               hooks: {
-                afterRead: [generateLscsMarkdownContent],
+                afterRead: [generateArcherbytesMarkdownContent],
                 beforeChange: [cleanupMarkdownField],
               },
             },
