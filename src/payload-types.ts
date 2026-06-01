@@ -81,6 +81,7 @@ export interface Config {
     'sgar-units': SgarUnit;
     'sgar-clusters': SgarCluster;
     'lscs-testimony': LscsTestimony;
+    apiKeys: ApiKey;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -102,6 +103,7 @@ export interface Config {
     'sgar-units': SgarUnitsSelect<false> | SgarUnitsSelect<true>;
     'sgar-clusters': SgarClustersSelect<false> | SgarClustersSelect<true>;
     'lscs-testimony': LscsTestimonySelect<false> | LscsTestimonySelect<true>;
+    apiKeys: ApiKeysSelect<false> | ApiKeysSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -114,6 +116,9 @@ export interface Config {
   globals: {};
   globalsSelect: {};
   locale: null;
+  widgets: {
+    collections: CollectionsWidget;
+  };
   user: User;
   jobs: {
     tasks: unknown;
@@ -183,6 +188,8 @@ export interface Account {
   scope?: string | null;
   sub: string;
   access_token?: string | null;
+  refresh_token?: string | null;
+  expires_in?: number | null;
   passkey?: {
     credentialId: string;
     publicKey:
@@ -471,6 +478,41 @@ export interface LscsTestimony {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "apiKeys".
+ */
+export interface ApiKey {
+  id: number;
+  /**
+   * Select the collections to protect operations with API Key
+   */
+  collections?:
+    | {
+        collection?:
+          | (
+              | 'users'
+              | 'accounts'
+              | 'media'
+              | 'lscs-article-category'
+              | 'lscs-articles'
+              | 'lscs-article-authors'
+              | 'lscs-partners'
+              | 'lscs-awards'
+              | 'lscs-web-assets'
+              | 'archerbytes-article-category'
+              | 'archerbytes-articles'
+              | 'sgar-units'
+              | 'sgar-clusters'
+              | 'lscs-testimony'
+            )
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -548,6 +590,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'lscs-testimony';
         value: number | LscsTestimony;
+      } | null)
+    | ({
+        relationTo: 'apiKeys';
+        value: number | ApiKey;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -632,6 +678,8 @@ export interface AccountsSelect<T extends boolean = true> {
   scope?: T;
   sub?: T;
   access_token?: T;
+  refresh_token?: T;
+  expires_in?: T;
   passkey?:
     | T
     | {
@@ -872,6 +920,20 @@ export interface LscsTestimonySelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "apiKeys_select".
+ */
+export interface ApiKeysSelect<T extends boolean = true> {
+  collections?:
+    | T
+    | {
+        collection?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -909,6 +971,16 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_widget".
+ */
+export interface CollectionsWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

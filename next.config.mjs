@@ -1,4 +1,7 @@
 import { withPayload } from '@payloadcms/next/withPayload'
+import path from 'path'
+
+const jsCookieAliasPath = path.resolve(process.cwd(), 'src/lib/js-cookie-alias.js')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -14,7 +17,16 @@ const nextConfig = {
       },
     ],
   },
+  turbopack: {
+    resolveAlias: {
+      'js-cookie': './src/lib/js-cookie-alias.js',
+    },
+  },
   webpack: (webpackConfig) => {
+    webpackConfig.resolve.alias = {
+      ...webpackConfig.resolve.alias,
+      'js-cookie': jsCookieAliasPath,
+    }
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
