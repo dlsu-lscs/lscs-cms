@@ -76,6 +76,27 @@ describe('accounts collection', () => {
   })
 })
 
+describe('shared content collections', () => {
+  const collections = [
+    'media',
+    'sgar-units',
+    'sgar-clusters',
+    'archerbytes-articles',
+    'archerbytes-article-category',
+  ]
+
+  it.each(collections)('lets any editor update and delete %s', async (slug) => {
+    const { update, delete: remove } = getCollection(slug).access
+    for (const check of [update, remove]) {
+      // Document ids never match the editor's user id here, so this is not an id coincidence
+      expect(await check(asReq(editor, { id: 999 }))).toBe(true)
+      expect(await check(asReq(admin, { id: 999 }))).toBe(true)
+      expect(await check(asReq(null, { id: 999 }))).toBe(false)
+      expect(await check(asReq(noRole, { id: noRole.id }))).toBe(false)
+    }
+  })
+})
+
 describe('users collection', () => {
   it('only lets admins create users through the API', async () => {
     const access = getCollection('users').access.create

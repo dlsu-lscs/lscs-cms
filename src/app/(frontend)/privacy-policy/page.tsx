@@ -6,10 +6,10 @@ import { Separator } from '@/components/ui/separator'
 import { Shield, Mail, Lock, User, Database, FileText } from 'lucide-react'
 
 export default function PrivacyPolicy() {
-  const lastUpdated = 'October 31, 2025'
+  const lastUpdated = 'October 11, 2026'
   const appName = 'La Salle Computer Society'
   const websiteName = 'LSCS CMS'
-  const contactEmail = 'rnd@dlsu-lscs.org'
+  const contactEmail = 'tech@dlsu-lscs.org'
 
   return (
     <div className="min-h-screen bg-black">
@@ -202,7 +202,7 @@ export default function PrivacyPolicy() {
 
         {/* Footer */}
         <footer className="text-center text-sm text-slate-500 -mb-4">
-          <p>© 2025 {appName}. All rights reserved.</p>
+          <p>© 2026 {appName}. All rights reserved.</p>
         </footer>
       </div>
     </div>

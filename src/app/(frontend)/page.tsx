@@ -1,8 +1,6 @@
 import { headers as getHeaders } from 'next/headers.js'
 import Image from 'next/image'
 import { getPayload } from 'payload'
-import React from 'react'
-import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import { Button } from '@/components/ui/button'
@@ -13,8 +11,6 @@ export default async function HomePage() {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers })
-
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background text-foreground flex-col">
@@ -27,7 +23,7 @@ export default async function HomePage() {
             </picture>
             <span>
               <h1 className="sm:text-5xl text-2xl font-bold text-foreground">LSCS CMS</h1>
-              <h4 className="sm:text-sm text-xs font-extralight">40th La Salle Computer Society</h4>
+              <h4 className="sm:text-sm text-xs font-extralight">41st La Salle Computer Society</h4>
             </span>
           </div>
 

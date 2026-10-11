@@ -6,16 +6,23 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+// Logs request metadata only; headers and response bodies are omitted
+// because they carry the Core API token and member data.
 export function logAxiosError(error: unknown) {
   if (axios.isAxiosError(error)) {
+    const request = {
+      method: error.config?.method?.toUpperCase(),
+      url: error.config?.url,
+    }
+
     if (error.response) {
-      // suppressed detailed axios response logging
+      console.error('[core-api] request failed', { ...request, status: error.response.status })
     } else if (error.request) {
-      // suppressed no-response logging
+      console.error('[core-api] no response received', { ...request, code: error.code })
     } else {
-      // suppressed axios config error logging
+      console.error('[core-api] request setup failed', { ...request, message: error.message })
     }
   } else {
-    // suppressed unknown error logging
+    console.error('[core-api] unexpected error', error)
   }
 }

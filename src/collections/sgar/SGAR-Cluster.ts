@@ -1,4 +1,4 @@
-import { isAdminOrEditor, isAdminOrSelf, isAuthenticated } from '@/services/access'
+import { isAdminOrEditor, isAuthenticated } from '@/services/access'
 import { CollectionConfig } from 'payload'
 
 export const SGAR_Clusters: CollectionConfig = {
@@ -8,14 +8,12 @@ export const SGAR_Clusters: CollectionConfig = {
     group: 'SGAR',
   },
   access: {
-    // Only authenticated users can read user data
+    // Only authenticated users can read SGAR data
     read: isAuthenticated,
-    // Only admins can create new users
+    // Admins and editors can manage SGAR data
     create: isAdminOrEditor,
-    // Users can update their own profile, admins can update anyone
-    update: isAdminOrSelf,
-    // Only admins can delete users
-    delete: isAdminOrSelf,
+    update: isAdminOrEditor,
+    delete: isAdminOrEditor,
   },
   fields: [{ name: 'cluster-name', required: true, type: 'text' }],
 }
