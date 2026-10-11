@@ -7,6 +7,7 @@ import { AdminAccounts } from '@/collections/Admin/Accounts'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { GenerateTitle } from '@payloadcms/plugin-seo/types'
+import { isAdmin } from '@/services/access'
 
 const generateTitle: GenerateTitle = ({ doc, ...args }) => {
   const collection = args.collectionConfig?.slug ?? ''
@@ -15,6 +16,21 @@ const generateTitle: GenerateTitle = ({ doc, ...args }) => {
 
   return 'La Salle Computer Society'
 }
+
+// payload-auth-plugin always injects an `apiKeys` collection with fully public access.
+// Restrict it to admins; must run after authPlugin.
+export const lockAuthPluginCollections: Plugin = (config) => ({
+  ...config,
+  collections: config.collections?.map((collection) =>
+    collection.slug === 'apiKeys'
+      ? {
+          ...collection,
+          admin: { ...collection.admin, group: 'Admin' },
+          access: { read: isAdmin, create: isAdmin, update: isAdmin, delete: isAdmin },
+        }
+      : collection,
+  ),
+})
 
 export const plugins: Plugin[] = [
   payloadCloudPlugin(),
@@ -33,6 +49,7 @@ export const plugins: Plugin[] = [
       }),
     ],
   }),
+  lockAuthPluginCollections,
   s3Storage({
     collections: {
       media: true,

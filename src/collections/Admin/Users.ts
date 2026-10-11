@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { isAdmin, isAdminOrSelf, isAdminField, isAuthenticated } from '@/services/access'
+import { isAdmin, isAdminOrSelf, isAdminField } from '@/services/access'
 import { deleteLinkedAccounts } from 'payload-auth-plugin/collection/hooks'
 import { AdminAccounts } from './Accounts'
 import { validateEmail } from '@/hooks/validateLscsEmail'
@@ -15,8 +15,8 @@ export const AdminUsers: CollectionConfig = {
   access: {
     // Only authenticated users can read user data
     read: isAdminOrSelf,
-
-    create: isAuthenticated,
+    // Only admins can create users via the API; Google sign-up is handled by payload-auth-plugin
+    create: isAdmin,
     // Users can update their own profile, admins can update anyone
     update: isAdminOrSelf,
     // Only admins can delete users
@@ -48,7 +48,8 @@ export const AdminUsers: CollectionConfig = {
         },
       ],
       access: {
-        // Only admins can change roles
+        // Only admins can set or change roles
+        create: isAdminField,
         update: isAdminField,
       },
     },
@@ -68,6 +69,7 @@ export const AdminUsers: CollectionConfig = {
       ],
       required: true,
       access: {
+        create: isAdminField,
         update: isAdminField,
       },
     },
