@@ -41,7 +41,7 @@ describe('validateEmail committee mapping', () => {
     })
   })
 
-  it.each(['PUBLI', 'CORE', 'DI'])('maps %s to LSCS editor', async (code) => {
+  it.each(['PUBLI', 'CORE', 'DI', 'PROD'])('maps %s to LSCS editor', async (code) => {
     coreReturns(code)
     expect(await runHook({ email: 'a@dlsu.edu.ph' }, 'create')).toMatchObject({
       role: 'editor',
