@@ -4,7 +4,7 @@ import { logAxiosError } from '@/lib/utils'
 
 // Core API committee codes. RND is the 40th-term code still held by existing members.
 export const ADMIN_COMMITTEES = ['RND', 'TECH', 'SYS', 'SI', 'INFRA', 'DEV']
-export const EDITOR_COMMITTEES = ['PUBLI', 'CORE', 'DI', 'PROD']
+export const EDITOR_COMMITTEES = ['PUBLI', 'PUBS', 'CORE', 'DI', 'DESFACE', 'PROD']
 
 export const validateEmail: CollectionBeforeChangeHook = async ({ data, operation }) => {
   const email = data.email
