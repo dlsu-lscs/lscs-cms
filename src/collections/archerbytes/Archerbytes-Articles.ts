@@ -1,4 +1,4 @@
-import { isAdminOrLscsEditor, isAdminOrLscsSelf, lscsHasRole } from '@/services/access'
+import { isAdminOrLscsEditor, lscsHasRole } from '@/services/access'
 import {
   afterChangeArcherbytesArticle,
   afterDeleteArcherbytesArticle,
@@ -34,8 +34,8 @@ export const Archerbytes_Articles: CollectionConfig = {
   access: {
     read: lscsHasRole,
     create: isAdminOrLscsEditor,
-    update: isAdminOrLscsSelf,
-    delete: isAdminOrLscsSelf,
+    update: isAdminOrLscsEditor,
+    delete: isAdminOrLscsEditor,
   },
   fields: [
     { name: 'title', type: 'text', required: true },

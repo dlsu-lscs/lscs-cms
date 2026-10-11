@@ -13,7 +13,7 @@ on:
 
 jobs:
 
-  # NOTE: deployment will depend on what platform you are deploying to, but these are some common ones we in RND use (either of the following):
+  # NOTE: deployment will depend on what platform you are deploying to, but these are some common ones the Technology Division uses (either of the following):
 
   ############### COOLIFY (selfhosted) ################
   deploy-prod-coolify:

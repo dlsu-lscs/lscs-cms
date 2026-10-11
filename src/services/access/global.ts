@@ -51,6 +51,15 @@ export const isAdminOrOwner: Access = ({ req: { user }, data }) => {
   return data?.uploadedBy === user.id
 }
 
+// Check if user is admin or the account record is linked to them (for OAuth accounts)
+export const isAdminOrAccountOwner: Access = ({ req: { user } }) => {
+  if (!user) return false
+
+  if ((user as UsersType).role === 'admin') return true
+
+  return { user: { equals: user.id } }
+}
+
 // Public read access
 export const isPublic: Access = () => true
 

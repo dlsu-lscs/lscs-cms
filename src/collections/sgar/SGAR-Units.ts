@@ -1,4 +1,4 @@
-import { isAuthenticated, isAdminOrEditor, isAdminOrSelf } from '@/services/access'
+import { isAuthenticated, isAdminOrEditor } from '@/services/access'
 import type { CollectionConfig } from 'payload'
 import { array } from 'payload/shared'
 
@@ -9,14 +9,12 @@ export const SGAR_Units: CollectionConfig = {
     group: 'SGAR',
   },
   access: {
-    // Only authenticated users can read user data
+    // Only authenticated users can read SGAR data
     read: isAuthenticated,
-    // Only admins can create new users
+    // Admins and editors can manage SGAR data
     create: isAdminOrEditor,
-    // Users can update their own profile, admins can update anyone
-    update: isAdminOrSelf,
-    // Only admins can delete users
-    delete: isAdminOrSelf,
+    update: isAdminOrEditor,
+    delete: isAdminOrEditor,
   },
   fields: [
     {

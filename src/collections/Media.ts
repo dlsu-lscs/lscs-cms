@@ -1,4 +1,4 @@
-import { isAdminOrEditor, isAdminOrSelf } from '@/services/access'
+import { isAdminOrEditor } from '@/services/access'
 import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
@@ -7,8 +7,8 @@ export const Media: CollectionConfig = {
   access: {
     read: () => true,
     create: isAdminOrEditor,
-    update: isAdminOrSelf,
-    delete: isAdminOrSelf,
+    update: isAdminOrEditor,
+    delete: isAdminOrEditor,
   },
   fields: [
     {
